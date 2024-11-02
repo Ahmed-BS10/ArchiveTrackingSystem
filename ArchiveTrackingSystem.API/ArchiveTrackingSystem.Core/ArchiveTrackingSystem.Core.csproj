@@ -23,7 +23,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Entities\" />
 	  <Folder Include="Dto\" />
 	  <Folder Include="Helper\" />
 	  <Folder Include="Constant\" />

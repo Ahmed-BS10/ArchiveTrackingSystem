@@ -23,11 +23,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Dto\" />
 	  <Folder Include="Helper\" />
 	  <Folder Include="Constant\" />
 	  <Folder Include="IRepoistories\" />
-	  <Folder Include="Services\" />
 	</ItemGroup>
 
 </Project>

@@ -20,6 +20,7 @@ namespace ArchiveTrackingSystem.Core.Entities
         [ForeignKey("PaymentID")]
         public TypePayment typePayment { get; set; }
 
+        public File file { get; set; }
        
     }
 

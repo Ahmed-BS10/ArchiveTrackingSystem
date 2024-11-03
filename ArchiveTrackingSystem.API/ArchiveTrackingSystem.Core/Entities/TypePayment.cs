@@ -10,8 +10,10 @@
         public string Note { get; set; }
 
         // Navigation Property 
-        public Activte activties { get; set; }
-        
+        public Activte activte { get; set; }
+        public File file { get; set; }
+
+
     }
 
 

@@ -11,12 +11,12 @@ namespace ArchiveTrackingSystem.Core.Entities
         public string ? Note {  get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime UpdateAt { get; set; }
+        public File file { get; set; }
 
-        // Navigation Property
-       
+
     }
 
-   
+
 
 
 }

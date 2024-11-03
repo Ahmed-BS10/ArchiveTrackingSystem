@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ArchiveTrackingSystem.EF.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -239,25 +239,24 @@ namespace ArchiveTrackingSystem.EF.Migrations
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PaymentID = table.Column<int>(type: "int", nullable: false)
+                    PaymentID = table.Column<int>(type: "int", nullable: false),
+                    typePaymentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Activte", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Activte_TypePayments_PaymentID",
-                        column: x => x.PaymentID,
+                        name: "FK_Activte_TypePayments_typePaymentId",
+                        column: x => x.typePaymentId,
                         principalTable: "TypePayments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Files",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<int>(type: "int", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CommercialNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TaxNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -270,40 +269,35 @@ namespace ArchiveTrackingSystem.EF.Migrations
                     AddressID = table.Column<int>(type: "int", nullable: false),
                     ActiveID = table.Column<int>(type: "int", nullable: false),
                     PaymentID = table.Column<int>(type: "int", nullable: false),
-                    ArchiveId = table.Column<int>(type: "int", nullable: true)
+                    addreesId = table.Column<int>(type: "int", nullable: false),
+                    typePaymentId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Files", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Files_Activte_ActiveID",
-                        column: x => x.ActiveID,
+                        name: "FK_Files_Activte_Id",
+                        column: x => x.Id,
                         principalTable: "Activte",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Files_Addreess_AddressID",
-                        column: x => x.AddressID,
+                        name: "FK_Files_Addreess_addreesId",
+                        column: x => x.addreesId,
                         principalTable: "Addreess",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Files_Archives_ArchiveID",
                         column: x => x.ArchiveID,
                         principalTable: "Archives",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Files_Archives_ArchiveId",
-                        column: x => x.ArchiveId,
-                        principalTable: "Archives",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Files_TypePayments_PaymentID",
-                        column: x => x.PaymentID,
+                        name: "FK_Files_TypePayments_typePaymentId",
+                        column: x => x.typePaymentId,
                         principalTable: "TypePayments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -338,10 +332,11 @@ namespace ArchiveTrackingSystem.EF.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Activte_PaymentID",
+                name: "IX_Activte_typePaymentId",
                 table: "Activte",
-                column: "PaymentID",
-                unique: true);
+                column: "typePaymentId",
+                unique: true,
+                filter: "[typePaymentId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -393,19 +388,10 @@ namespace ArchiveTrackingSystem.EF.Migrations
                 column: "FileID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Files_ActiveID",
+                name: "IX_Files_addreesId",
                 table: "Files",
-                column: "ActiveID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Files_AddressID",
-                table: "Files",
-                column: "AddressID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Files_ArchiveId",
-                table: "Files",
-                column: "ArchiveId");
+                column: "addreesId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Files_ArchiveID",
@@ -413,9 +399,11 @@ namespace ArchiveTrackingSystem.EF.Migrations
                 column: "ArchiveID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Files_PaymentID",
+                name: "IX_Files_typePaymentId",
                 table: "Files",
-                column: "PaymentID");
+                column: "typePaymentId",
+                unique: true,
+                filter: "[typePaymentId] IS NOT NULL");
         }
 
         /// <inheritdoc />

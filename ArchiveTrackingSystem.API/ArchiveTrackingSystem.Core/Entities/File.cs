@@ -14,31 +14,21 @@ namespace ArchiveTrackingSystem.Core.Entities
         public string FileStatus { get; set; }
         public string Notes { get; set; }
 
-
-
-        // ForeignKey
+        // ForeignKey properties
         public int ArchiveID { get; set; }
         public int AddressID { get; set; }
         public int ActiveID { get; set; }
         public int PaymentID { get; set; }
 
-        //Navigation property 
-        [ForeignKey("ArchiveID")]
+        // Navigation properties
         public Archive archive { get; set; }
-
-
-        [ForeignKey("AddressID")]
         public Addrees addrees { get; set; }
-
-
-        [ForeignKey("ActiveID")]
         public Activte activte { get; set; }
-
-        [ForeignKey("PaymentID")]
         public TypePayment typePayment { get; set; }
 
         public ICollection<FileOutsideArchive> fileOutsideArchives { get; set; }
     }
+
 
 
 }

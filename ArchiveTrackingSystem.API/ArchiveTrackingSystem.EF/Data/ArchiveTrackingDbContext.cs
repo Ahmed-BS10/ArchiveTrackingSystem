@@ -23,7 +23,47 @@ namespace ArchiveTrackingSystem.EF.Data
         public DbSet<FileOutsideArchive> FileOutsideArchives { get; set; }
 
 
-      
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+          
+
+            builder.Entity<TypePayment>()
+                .HasOne(tp => tp.activte)
+                .WithOne(ac => ac.typePayment)
+                .HasForeignKey<Activte>();
+
+
+
+            builder.Entity<Employe>()
+                .HasMany(em => em.fileOutsideArchives)
+                .WithOne(fa => fa.employe)
+                .HasForeignKey(fa => fa.EmployeID);
+
+            builder.Entity<Core.Entities.File>()
+                .HasOne(fi => fi.activte)
+                .WithOne(ac => ac.file)
+                .HasForeignKey<Core.Entities.File>();
+
+
+            builder.Entity<Core.Entities.File>()
+               .HasOne(fi => fi.addrees)
+               .WithOne((ad => ad.file))
+               .HasForeignKey<Core.Entities.File>();
+            
+
+            builder.Entity<Core.Entities.File>()
+               .HasOne(fi => fi.typePayment)
+               .WithOne((ty => ty.file))
+               .HasForeignKey<Core.Entities.File>();
+
+
+            builder.Entity<Core.Entities.File>()
+              .HasMany(fi => fi.fileOutsideArchives)
+              .WithOne(fa => fa.file)
+              .HasForeignKey(fa => fa.FileID);
+        }
 
     }
 }

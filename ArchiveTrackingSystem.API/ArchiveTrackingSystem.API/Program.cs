@@ -21,11 +21,11 @@ option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection
 
 #region Services
 builder.Services.AddTransient<UserServices>();
+builder.Services.AddTransient<RoleServices>();
 #endregion
 
 #region Mapper
 builder.Services.AddAutoMapper(typeof(ProfileMapper).Assembly);
-
 #endregion
 
 #region Identity

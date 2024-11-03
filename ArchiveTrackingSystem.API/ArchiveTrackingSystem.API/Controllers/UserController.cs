@@ -1,4 +1,4 @@
-﻿using ArchiveTrackingSystem.Core.Dto;
+﻿using ArchiveTrackingSystem.Core.Dto.UserDtos;
 using ArchiveTrackingSystem.Core.Entities;
 using ArchiveTrackingSystem.Core.Services;
 using AutoMapper;
@@ -33,21 +33,8 @@ namespace ArchiveTrackingSystem.API.Controllers
                 case "Email Already Exists": return BadRequest("Email Already Exists");
                 case "User Name Already Exists": return BadRequest("Name Already Exists");
                 case "User PhoneNumber Already Exists": return BadRequest("User PhoneNumber Already Exists");
-                case "Success": return Ok();
+                case "Successed": return Ok();
                 default: return BadRequest(addResult);
-            }
-        }
-
-        [HttpDelete(UserRouting.Delete)]
-        public async Task<IActionResult> Delete(int id)
-        {
-            var deleteResult = await _userServices.DeleteAsync(id);
-
-            switch(deleteResult)
-            {
-                case "User Not Found": return NotFound("User Not Found");
-                case "Deleteed Success": return BadRequest("Deleteed Success");
-                default: return BadRequest(deleteResult);
             }
         }
 
@@ -64,20 +51,36 @@ namespace ArchiveTrackingSystem.API.Controllers
 
         }
 
-        [HttpPut(UserRouting.Edit)] 
+        [HttpPut(UserRouting.Edit)]
         public async Task<IActionResult> Edit(UserEditDto userEditDto)
         {
             var userMapper = _mapper.Map<User>(userEditDto);
 
             var editResult = await _userServices.EditAsync(userMapper);
 
-            switch (editResult) {
+            switch (editResult)
+            {
                 case "User Not Found": return NotFound("User Not Found");
                 case "User Name Already Exists": return BadRequest("User Name Already Exists");
                 case "User PhoneNumber Already Exists": return BadRequest("User PhoneNumber Already Exists");
-                 case "Successed": return Ok($"Id Edited is {userMapper.Id}");
+                case "Successed": return Ok($"Id Edited is {userMapper.Id}");
                 default: return BadRequest(editResult);
             }
         }
+
+        [HttpDelete(UserRouting.Delete)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var deleteResult = await _userServices.DeleteAsync(id);
+
+            switch(deleteResult)
+            {
+                case "User Not Found": return NotFound("User Not Found");
+                case "Deleteed Success": return BadRequest("Deleteed Success");
+                default: return BadRequest(deleteResult);
+            }
+        }
+
+      
     }
 }

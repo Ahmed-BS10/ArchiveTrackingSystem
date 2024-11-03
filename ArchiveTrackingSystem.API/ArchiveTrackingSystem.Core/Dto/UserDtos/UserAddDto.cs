@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArchiveTrackingSystem.Core.Dto
+namespace ArchiveTrackingSystem.Core.Dto.UserDtos
 {
     public class UserAddDto
     {

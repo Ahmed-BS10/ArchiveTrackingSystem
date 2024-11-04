@@ -34,8 +34,7 @@ namespace ArchiveTrackingSystem.API.Controllers
                 case "User Name Already Exists": return BadRequest("Name Already Exists");
                 case "User PhoneNumber Already Exists": return BadRequest("User PhoneNumber Already Exists");
                 case "ThisRoleNotExists": return BadRequest($"This Role {role} Not Exists");
-                case "Successed": return Ok();
-                default: return BadRequest(addResult);
+                default: return Ok(addResult);
             }
         }
 

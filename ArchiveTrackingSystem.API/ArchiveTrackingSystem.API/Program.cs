@@ -1,4 +1,6 @@
+using ArchiveTrackingSystem.API.Controllers;
 using ArchiveTrackingSystem.Core.Entities;
+using ArchiveTrackingSystem.Core.Helper;
 using ArchiveTrackingSystem.Core.Services;
 using ArchiveTrackingSystem.EF.Data;
 using Microsoft.AspNetCore.Identity;
@@ -23,6 +25,7 @@ option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection
 builder.Services.AddTransient<UserServices>();
 builder.Services.AddTransient<RoleServices>();
 builder.Services.AddTransient<AuthorizationServices>();
+builder.Services.AddTransient<AuthenticatiomServices>();
 #endregion
 
 #region Mapper
@@ -48,7 +51,13 @@ builder.Services.AddIdentity<User, Role>(options =>
 }).AddEntityFrameworkStores<ArchiveTrackingDbContext>().AddDefaultTokenProviders();
 
 #endregion
-    
+
+#region jwtSettings
+var jwtSettings = new JwtSettings();
+builder.Configuration.GetSection("Jwt").Bind(jwtSettings);
+builder.Services.AddSingleton(jwtSettings);
+#endregion
+
 
 var app = builder.Build();
 

@@ -14,11 +14,13 @@ namespace ArchiveTrackingSystem.Core.Services
     {
         private readonly UserManager<User> _userManager;
         private readonly RoleManager<Role> _roleManager;
+        private readonly AuthenticatiomServices _authenticatiomServices;
 
-        public UserServices(UserManager<User> userManager, RoleManager<Role> roleManager)
+        public UserServices(UserManager<User> userManager, RoleManager<Role> roleManager, AuthenticatiomServices authenticatiomServices)
         {
             _userManager=userManager;
             _roleManager=roleManager;
+            _authenticatiomServices=authenticatiomServices;
         }
 
         public async Task<IEnumerable<User>> GetListAsync()
@@ -68,7 +70,9 @@ namespace ArchiveTrackingSystem.Core.Services
 
             await _userManager.AddToRoleAsync(inputUser, role);
 
-            return "Successed";
+            var token = await _authenticatiomServices.CreateToken(inputUser);
+
+            return token;
 
         }
         public async Task<string> EditAsync(User user)

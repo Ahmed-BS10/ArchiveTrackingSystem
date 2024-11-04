@@ -54,8 +54,6 @@ namespace ArchiveTrackingSystem.Core.Services
             var result = await _userManager.RemoveFromRolesAsync(user, roleNames);
             return result.Succeeded ? "RolesRemovedSuccessfully" : "FailedToRemoveRoles";
         }
-
-
         public async Task<string> EditUserRolesAsync(int userId, List<string> roleNames)
         {
             //var transaction = await _context.Database.BeginTransactionAsync();

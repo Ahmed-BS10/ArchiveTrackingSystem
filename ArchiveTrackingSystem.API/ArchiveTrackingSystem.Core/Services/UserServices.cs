@@ -13,10 +13,12 @@ namespace ArchiveTrackingSystem.Core.Services
     public class UserServices
     {
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
 
-        public UserServices(UserManager<User> userManager)
+        public UserServices(UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             _userManager=userManager;
+            _roleManager=roleManager;
         }
 
         public async Task<IEnumerable<User>> GetListAsync()
@@ -48,6 +50,11 @@ namespace ArchiveTrackingSystem.Core.Services
 
 
 
+            var roleExist = await _roleManager.RoleExistsAsync(role);
+            if (!roleExist)
+                return "ThisRoleNotExists";
+
+
 
             var reslutCreate = await _userManager.CreateAsync(inputUser, password);
 
@@ -55,6 +62,10 @@ namespace ArchiveTrackingSystem.Core.Services
 
             if (!reslutCreate.Succeeded)
                 return string.Join("; ", reslutCreate.Errors.Select(e => e.Description));
+
+
+
+
             await _userManager.AddToRoleAsync(inputUser, role);
 
             return "Successed";

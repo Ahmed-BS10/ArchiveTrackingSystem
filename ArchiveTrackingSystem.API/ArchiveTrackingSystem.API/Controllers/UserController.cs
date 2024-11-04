@@ -23,7 +23,7 @@ namespace ArchiveTrackingSystem.API.Controllers
         }
 
         [HttpPost(UserRouting.Create)]
-        public async Task<IActionResult> CreateAsync([FromQuery]UserAddDto userAddDto , string role)
+        public async Task<IActionResult> CreateAsync([FromBody]UserAddDto userAddDto , string role)
         {
             var user = _mapper.Map<User>(userAddDto);
             var addResult = await _userServices.AddAsycn(user, userAddDto.Password, role);
@@ -33,6 +33,7 @@ namespace ArchiveTrackingSystem.API.Controllers
                 case "Email Already Exists": return BadRequest("Email Already Exists");
                 case "User Name Already Exists": return BadRequest("Name Already Exists");
                 case "User PhoneNumber Already Exists": return BadRequest("User PhoneNumber Already Exists");
+                case "ThisRoleNotExists": return BadRequest($"This Role {role} Not Exists");
                 case "Successed": return Ok();
                 default: return BadRequest(addResult);
             }

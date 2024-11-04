@@ -22,6 +22,7 @@ option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection
 #region Services
 builder.Services.AddTransient<UserServices>();
 builder.Services.AddTransient<RoleServices>();
+builder.Services.AddTransient<AuthorizationServices>();
 #endregion
 
 #region Mapper

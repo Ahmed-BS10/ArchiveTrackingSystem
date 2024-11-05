@@ -1,20 +1,14 @@
-﻿namespace ArchiveTrackingSystem.Core.Entities
+﻿namespace ArchiveTrackingSystem.Core.Dto.PaymentDtos
 {
-    public class TypePayment
+    public class PaymentAddDto
     {
-        public int Id { get; set; }
+
         public int Number { get; set; }
         public string Name { get; set; }
         public DateTime CreateAt { get; set; }
         public DateTime? UpdateAt { get; set; }
         public string Note { get; set; }
 
-        // Navigation Property 
-        public Active? activte { get; set; }
-        public File? file { get; set; }
-
 
     }
-
-
 }

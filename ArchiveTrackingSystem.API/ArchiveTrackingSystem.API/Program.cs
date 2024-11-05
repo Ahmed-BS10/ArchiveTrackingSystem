@@ -1,8 +1,10 @@
 using ArchiveTrackingSystem.API.Controllers;
 using ArchiveTrackingSystem.Core.Entities;
 using ArchiveTrackingSystem.Core.Helper;
+using ArchiveTrackingSystem.Core.IRepoistories;
 using ArchiveTrackingSystem.Core.Services;
 using ArchiveTrackingSystem.EF.Data;
+using ArchiveTrackingSystem.EF.RepoistoriesImplementations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -26,6 +28,12 @@ builder.Services.AddTransient<UserServices>();
 builder.Services.AddTransient<RoleServices>();
 builder.Services.AddTransient<AuthorizationServices>();
 builder.Services.AddTransient<AuthenticatiomServices>();
+builder.Services.AddTransient<ActiveServices>();
+builder.Services.AddTransient<PaymentServices>();
+#endregion
+
+#region Repoistory
+builder.Services.AddTransient(typeof(IBaseRepository<>), typeof(BaseReposotory<>));
 #endregion
 
 #region Mapper

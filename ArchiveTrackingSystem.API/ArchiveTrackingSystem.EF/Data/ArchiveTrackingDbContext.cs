@@ -10,14 +10,14 @@ using System.Threading.Tasks;
 
 namespace ArchiveTrackingSystem.EF.Data
 {
-    public class ArchiveTrackingDbContext : IdentityDbContext<User , Role , int>
+    public class ArchiveTrackingDbContext : IdentityDbContext<User, Role, int>
     {
         public ArchiveTrackingDbContext(DbContextOptions<ArchiveTrackingDbContext> options) : base(options) { }
-        
+
         public DbSet<Archive> Archives { get; set; }
         public DbSet<Core.Entities.File> Files { get; set; }
         public DbSet<Addrees> Addreess { get; set; }
-        public DbSet<Activte> Activte { get; set; }
+        public DbSet<Active> Activte { get; set; }
         public DbSet<TypePayment> TypePayments { get; set; }
         public DbSet<Employe> Employes { get; set; }
         public DbSet<FileOutsideArchive> FileOutsideArchives { get; set; }
@@ -27,12 +27,13 @@ namespace ArchiveTrackingSystem.EF.Data
         {
             base.OnModelCreating(builder);
 
-          
+
 
             builder.Entity<TypePayment>()
-                .HasOne(tp => tp.activte)
-                .WithOne(ac => ac.typePayment)
-                .HasForeignKey<Activte>();
+             .HasOne(tp => tp.activte)
+             .WithOne(ac => ac.typePayment)
+             .HasForeignKey<Active>(ac => ac.PaymentID);
+
 
 
 
@@ -51,7 +52,7 @@ namespace ArchiveTrackingSystem.EF.Data
                .HasOne(fi => fi.addrees)
                .WithOne((ad => ad.file))
                .HasForeignKey<Core.Entities.File>();
-            
+
 
             builder.Entity<Core.Entities.File>()
                .HasOne(fi => fi.typePayment)

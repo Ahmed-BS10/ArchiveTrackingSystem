@@ -2,7 +2,7 @@
 
 namespace ArchiveTrackingSystem.Core.Entities
 {
-    public class Activte
+    public class Active
     {
         public int Id { get; set; }
         public string NumberActive { get; set; }
@@ -10,17 +10,15 @@ namespace ArchiveTrackingSystem.Core.Entities
         public string Type { get; set; }
         public string? Note { get; set; }
         public DateTime CreateAt { get; set; }
-        public DateTime UpdateAt { get; set; }
+        public DateTime? UpdateAt { get; set; }
 
         //ForeignKey
 
-        public int PaymentID { get; set; }
-
+        public int? PaymentID { get; set; }
         // Navigation Property
         [ForeignKey("PaymentID")]
-        public TypePayment typePayment { get; set; }
-
-        public File file { get; set; }
+        public TypePayment? typePayment { get; set; }
+        public File? file { get; set; }
        
     }
 

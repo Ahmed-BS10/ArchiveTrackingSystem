@@ -1,5 +1,4 @@
-﻿using ArchiveTrackingSystem.Core.Dto.UserRoleDtos;
-using ArchiveTrackingSystem.Core.Entities;
+﻿using ArchiveTrackingSystem.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;

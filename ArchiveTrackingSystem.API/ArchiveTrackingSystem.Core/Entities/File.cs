@@ -23,7 +23,7 @@ namespace ArchiveTrackingSystem.Core.Entities
         // Navigation properties
         public Archive archive { get; set; }
         public Addrees addrees { get; set; }
-        public Activte activte { get; set; }
+        public Active activte { get; set; }
         public TypePayment typePayment { get; set; }
 
         public ICollection<FileOutsideArchive> fileOutsideArchives { get; set; }

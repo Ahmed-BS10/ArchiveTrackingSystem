@@ -39,5 +39,27 @@ namespace ArchiveTrackingSystem.Core.Routes
             public const string Delete = $"{Prefix}DeleteUserRole{"Id"}";
 
         }
+        public static class ActiveRouting
+        {
+            public const string Prefix = $"{Rule}Active/";
+            public const string List = $"{Prefix}List";
+            public const string GetById = $"{Prefix}{"Id"}";
+            public const string Create = $"{Prefix}Create";
+            public const string Edit = $"{Prefix}Edit";
+            public const string Delete = $"{Prefix}Delete{"Id"}";
+            public const string GetListWithincludes = $"{Prefix}GetListWithincludes";
+
+        }
+        public static class PaymentRouting
+        {
+            public const string Prefix = $"{Rule}Paymnet/";
+            public const string List = $"{Prefix}List";
+            public const string GetById = $"{Prefix}{"Id"}";
+            public const string Create = $"{Prefix}Create";
+            public const string Edit = $"{Prefix}Edit";
+            public const string Delete = $"{Prefix}Delete{"Id"}";
+            public const string GetListWithincludes = $"{Prefix}GetListWithincludes";
+
+        }
     }
 }

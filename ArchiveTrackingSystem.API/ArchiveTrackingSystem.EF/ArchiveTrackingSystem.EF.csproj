@@ -23,10 +23,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="RepoistoriesImplementations\" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\ArchiveTrackingSystem.Core\ArchiveTrackingSystem.Core.csproj" />
 	</ItemGroup>
 

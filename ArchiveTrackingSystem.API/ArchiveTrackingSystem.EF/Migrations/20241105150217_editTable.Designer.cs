@@ -4,6 +4,7 @@ using ArchiveTrackingSystem.EF.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArchiveTrackingSystem.EF.Migrations
 {
     [DbContext(typeof(ArchiveTrackingDbContext))]
-    partial class ArchiveTrackingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241105150217_editTable")]
+    partial class editTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace ArchiveTrackingSystem.EF.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ArchiveTrackingSystem.Core.Entities.Active", b =>
+            modelBuilder.Entity("ArchiveTrackingSystem.Core.Entities.Activte", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -44,7 +47,7 @@ namespace ArchiveTrackingSystem.EF.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("PaymentID")
+                    b.Property<int>("PaymentID")
                         .HasColumnType("int");
 
                     b.Property<string>("Type")
@@ -54,11 +57,14 @@ namespace ArchiveTrackingSystem.EF.Migrations
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("typePaymentId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("PaymentID")
+                    b.HasIndex("typePaymentId")
                         .IsUnique()
-                        .HasFilter("[PaymentID] IS NOT NULL");
+                        .HasFilter("[typePaymentId] IS NOT NULL");
 
                     b.ToTable("Activte");
                 });
@@ -198,15 +204,18 @@ namespace ArchiveTrackingSystem.EF.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("addreesId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("typePaymentId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ActiveID")
-                        .IsUnique();
-
                     b.HasIndex("ArchiveID");
+
+                    b.HasIndex("addreesId")
+                        .IsUnique();
 
                     b.HasIndex("typePaymentId")
                         .IsUnique()
@@ -493,32 +502,32 @@ namespace ArchiveTrackingSystem.EF.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ArchiveTrackingSystem.Core.Entities.Active", b =>
+            modelBuilder.Entity("ArchiveTrackingSystem.Core.Entities.Activte", b =>
                 {
                     b.HasOne("ArchiveTrackingSystem.Core.Entities.TypePayment", "typePayment")
                         .WithOne("activte")
-                        .HasForeignKey("ArchiveTrackingSystem.Core.Entities.Active", "PaymentID");
+                        .HasForeignKey("ArchiveTrackingSystem.Core.Entities.Activte", "typePaymentId");
 
                     b.Navigation("typePayment");
                 });
 
             modelBuilder.Entity("ArchiveTrackingSystem.Core.Entities.File", b =>
                 {
-                    b.HasOne("ArchiveTrackingSystem.Core.Entities.Active", "activte")
-                        .WithOne("file")
-                        .HasForeignKey("ArchiveTrackingSystem.Core.Entities.File", "ActiveID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ArchiveTrackingSystem.Core.Entities.Archive", "archive")
                         .WithMany("Files")
                         .HasForeignKey("ArchiveID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ArchiveTrackingSystem.Core.Entities.Addrees", "addrees")
+                    b.HasOne("ArchiveTrackingSystem.Core.Entities.Activte", "activte")
                         .WithOne("file")
                         .HasForeignKey("ArchiveTrackingSystem.Core.Entities.File", "Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ArchiveTrackingSystem.Core.Entities.Addrees", "addrees")
+                        .WithOne("file")
+                        .HasForeignKey("ArchiveTrackingSystem.Core.Entities.File", "addreesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -605,7 +614,7 @@ namespace ArchiveTrackingSystem.EF.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("ArchiveTrackingSystem.Core.Entities.Active", b =>
+            modelBuilder.Entity("ArchiveTrackingSystem.Core.Entities.Activte", b =>
                 {
                     b.Navigation("file");
                 });

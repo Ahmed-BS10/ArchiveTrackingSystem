@@ -4,6 +4,7 @@ using ArchiveTrackingSystem.EF.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArchiveTrackingSystem.EF.Migrations
 {
     [DbContext(typeof(ArchiveTrackingDbContext))]
-    partial class ArchiveTrackingDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241105151339_editTable2")]
+    partial class editTable2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -54,11 +57,14 @@ namespace ArchiveTrackingSystem.EF.Migrations
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("typePaymentId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("PaymentID")
+                    b.HasIndex("typePaymentId")
                         .IsUnique()
-                        .HasFilter("[PaymentID] IS NOT NULL");
+                        .HasFilter("[typePaymentId] IS NOT NULL");
 
                     b.ToTable("Activte");
                 });
@@ -497,7 +503,7 @@ namespace ArchiveTrackingSystem.EF.Migrations
                 {
                     b.HasOne("ArchiveTrackingSystem.Core.Entities.TypePayment", "typePayment")
                         .WithOne("activte")
-                        .HasForeignKey("ArchiveTrackingSystem.Core.Entities.Active", "PaymentID");
+                        .HasForeignKey("ArchiveTrackingSystem.Core.Entities.Active", "typePaymentId");
 
                     b.Navigation("typePayment");
                 });

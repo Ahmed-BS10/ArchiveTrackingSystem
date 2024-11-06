@@ -53,7 +53,7 @@ namespace ArchiveTrackingSystem.API.Controllers
         [HttpPost(ActiveRouting.Create)]
         public async Task<IActionResult> Create([FromQuery]ActiveAddDto activeAddDto)
         {
-            if (activeAddDto == null)
+            if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
             var activeMapper = _mapper.Map<Active>(activeAddDto);
@@ -64,6 +64,37 @@ namespace ArchiveTrackingSystem.API.Controllers
 
             return BadRequest(ModelState);
 
+
+        }
+        [HttpPut(ActiveRouting.Edit)]
+        public async Task<IActionResult> Update(ActiveUpdateDto activeUpdateDto)
+        {
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var ActiveMapper = _mapper.Map<Active>(activeUpdateDto);
+            var UpdateActive = await _activeServices.UpdateAsync(ActiveMapper);
+
+            if(UpdateActive != null)
+                return Ok(UpdateActive);
+            return BadRequest(ModelState);
+        }
+
+        [HttpDelete(ActiveRouting.Delete)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var active = await _activeServices.Find(x => x.Id == id);
+            if (active != null)
+            {
+                var deleteActive = await _activeServices.DeleteAsync(active);
+
+                if (deleteActive == "Successed Deleted")
+                    return Ok(active);
+
+               
+            }
+
+            return BadRequest("It Can Not Delete Null Active");
 
         }
     }

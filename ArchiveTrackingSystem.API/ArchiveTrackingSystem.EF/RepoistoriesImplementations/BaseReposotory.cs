@@ -50,21 +50,21 @@ namespace ArchiveTrackingSystem.EF.RepoistoriesImplementations
             return await values.Where(predicate).ToListAsync();
         }
 
-        //public async Task<IEnumerable<T>> FindAll(Expression<Func<T, bool>> predicate, string[] includes = null)
-        //{
-        //    IQueryable<T> values = _dbContext.Set<T>();
-
-        //    if (includes != null)
-        //    {
-        //        foreach (var include in includes)
-        //        {
-        //            values = values.Include(include);
-        //        }
-        //    }
-        //    return await values.Where(predicate).ToListAsync();
-        //}
+        public async Task<T> Find(Expression<Func<T, bool>> predicate, string[] includes = null)
+        {
 
 
+            IQueryable<T> values = _dbContext.Set<T>();
+
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    values = values.Include(include);
+                }
+            }
+            return await values.FirstOrDefaultAsync(predicate);
+        }
         public async Task<IEnumerable<T>> GetListAsync()
         {
             return await _dbContext.Set<T>().AsNoTracking().ToListAsync();
@@ -88,7 +88,6 @@ namespace ArchiveTrackingSystem.EF.RepoistoriesImplementations
         {
             return _dbContext.Set<T>().AsQueryable();
         }
-
 
         public IQueryable<T> GetTableNoTracking()
         {

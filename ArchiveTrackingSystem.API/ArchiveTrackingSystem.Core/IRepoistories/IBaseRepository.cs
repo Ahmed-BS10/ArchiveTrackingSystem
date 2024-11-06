@@ -18,8 +18,7 @@ namespace ArchiveTrackingSystem.Core.IRepoistories
         IQueryable<T> GetTableAsTracking();
 
         Task<IEnumerable<T>> GetListWithincludesAsync(string[] includes = null);
-
-        //T Find(Expression<Func<T, bool>> predicate, string[] includes = null);
+        Task<T> Find(Expression<Func<T, bool>> predicate, string[] includes = null);
 
 
     }

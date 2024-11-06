@@ -36,6 +36,13 @@ public class ProfileMapper : Profile
                        opt => opt.MapFrom(src => src.typePayment != null ? src.typePayment.Name : "لا يوجد"));
 
         CreateMap<Active, ActiveGetDto>();
+
+
+        CreateMap<ActiveUpdateDto, Active>()
+            .ForMember(dest => dest.CreateAt, opt => opt.Ignore()) // Set the creation time to now
+            .ForMember(dest => dest.UpdateAt, opt => opt.MapFrom(src => DateTime.Now)) // Ignore UpdateAt since it's set on update
+            .ForMember(dest => dest.typePayment, opt => opt.Ignore()) // Ignore TypePayment, will set via PaymentID if needed
+            .ForMember(dest => dest.PaymentID, opt => opt.MapFrom(src => src.PaymentID)); // Map PaymentID directly
         #endregion
 
         #region Payment Mapper
@@ -45,6 +52,8 @@ public class ProfileMapper : Profile
            .ForMember(dest => dest.file, opt => opt.Ignore()); // Ignore TypePayment, will set via PaymentID if needed
 
         #endregion
+
+       
 
 
 

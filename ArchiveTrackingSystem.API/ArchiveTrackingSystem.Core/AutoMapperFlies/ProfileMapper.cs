@@ -46,14 +46,24 @@ public class ProfileMapper : Profile
         #endregion
 
         #region Payment Mapper
+
         CreateMap<TypePayment, PaymentGetDto>();
+
         CreateMap<PaymentAddDto, TypePayment>()
+           .ForMember(dest => dest.CreateAt, opt => opt.MapFrom(src => DateTime.Now))
            .ForMember(dest => dest.activte, opt => opt.Ignore()) // Ignore TypePayment, will set via PaymentID if needed
            .ForMember(dest => dest.file, opt => opt.Ignore()); // Ignore TypePayment, will set via PaymentID if needed
 
+
+        CreateMap<PaymentEditDto, TypePayment>()
+          .ForMember(dest => dest.UpdateAt, opt => opt.MapFrom(src => DateTime.Now))
+          .ForMember(dest => dest.activte, opt => opt.Ignore()) // Ignore TypePayment, will set via PaymentID if needed
+          .ForMember(dest => dest.file, opt => opt.Ignore()); // Ignore TypePayment, will set via PaymentID if needed
+
+
         #endregion
 
-       
+
 
 
 

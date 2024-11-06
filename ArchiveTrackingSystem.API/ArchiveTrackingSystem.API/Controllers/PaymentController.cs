@@ -47,5 +47,36 @@ namespace ArchiveTrackingSystem.API.Controllers
 
             return BadRequest("There was an error happend");
         }
+
+
+        [HttpPut(PaymentRouting.Edit)]
+        public async Task<IActionResult> Update(PaymentEditDto paymentEditDto)
+        {
+            if (paymentEditDto == null) return BadRequest("No Data For Edit");
+
+            var payMapper = _mapper.Map<TypePayment>(paymentEditDto);
+            var editPay = await _paymentServices.UpdateAsync(payMapper);
+            if (editPay != null) return Ok(editPay);
+
+            return BadRequest("There was an error happend");
+        }
+
+        [HttpDelete(PaymentRouting.Delete)]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var payment = await _paymentServices.Find(x => x.Id == id);
+            if (payment != null)
+            {
+                var deleteActive = await _paymentServices.DeleteAsync(payment);
+
+                if (deleteActive == "Successed Deleted")
+                    return Ok(payment);
+
+
+            }
+
+            return BadRequest("It Can Not Delete Null Active");
+
+        }
     }
 }

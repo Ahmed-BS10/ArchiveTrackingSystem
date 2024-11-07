@@ -48,7 +48,6 @@ namespace ArchiveTrackingSystem.API.Controllers
             return BadRequest("There was an error happend");
         }
 
-
         [HttpPut(PaymentRouting.Edit)]
         public async Task<IActionResult> Update(PaymentEditDto paymentEditDto)
         {

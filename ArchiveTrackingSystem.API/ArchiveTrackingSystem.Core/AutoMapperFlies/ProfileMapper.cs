@@ -1,4 +1,5 @@
 ﻿using ArchiveTrackingSystem.Core.Dto.ActiveDtos;
+using ArchiveTrackingSystem.Core.Dto.EmployeDtos;
 using ArchiveTrackingSystem.Core.Dto.PaymentDtos;
 using ArchiveTrackingSystem.Core.Dto.RoleDtos;
 using ArchiveTrackingSystem.Core.Dto.UserDtos;
@@ -63,10 +64,18 @@ public class ProfileMapper : Profile
 
         #endregion
 
+        #region Employe Mapper
+        
+        CreateMap<EmployeAddDto, Employe>()
+            .ForMember(dest => dest.CreateAt, opt => opt.MapFrom(src => DateTime.Now));
+
+        CreateMap<EmployeUpdateDto, Employe>()
+            .ForMember(dest => dest.UpdateAt, opt => opt.MapFrom(src => DateTime.Now));
 
 
+        CreateMap<Employe, EmployeGetDto>();
 
-
+        #endregion
 
     }
 

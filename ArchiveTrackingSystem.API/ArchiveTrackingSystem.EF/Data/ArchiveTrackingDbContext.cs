@@ -28,6 +28,9 @@ namespace ArchiveTrackingSystem.EF.Data
             base.OnModelCreating(builder);
 
 
+            builder.Entity<Employe>()
+            .HasIndex(e => e.Slug)
+            .IsUnique();
 
             builder.Entity<TypePayment>()
              .HasOne(tp => tp.activte)

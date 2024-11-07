@@ -35,7 +35,6 @@ namespace ArchiveTrackingSystem.EF.RepoistoriesImplementations
 
             return entity;
         }
-
         public async Task<IEnumerable<T>> FindAll(Expression<Func<T, bool>> predicate, string[] includes = null)
         {
             IQueryable<T> values = _dbContext.Set<T>();

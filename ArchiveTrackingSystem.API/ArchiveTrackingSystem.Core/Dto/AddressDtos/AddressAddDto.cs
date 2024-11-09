@@ -4,15 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArchiveTrackingSystem.Core.Dto.ActiveDtos
+namespace ArchiveTrackingSystem.Core.Dto.AddressDtos
 {
-    public class ActiveAddDto
+    public class AddressAddDto
     {
-        public string NumberActive { get; set; }
-        public string Name { get; set; }
-        public string Type { get; set; }
-        public string? Note { get; set; }
-        public int? PaymentID { get; set; }
 
+        public string Name { get; set; }
+        public string City { get; set; }
+        public string Dstrict { get; set; }
+        public string? Note { get; set; }
     }
 }

@@ -41,9 +41,11 @@ namespace ArchiveTrackingSystem.API.Controllers
         {
             if (paymentAddDto == null) return BadRequest("No Data For Add");
 
-            var payMapper = _mapper.Map<TypePayment>(paymentAddDto);
+            var payMapper = _mapper.Map<Payment>(paymentAddDto);
+
             var addPay = await _paymentServices.CreateAsync(payMapper);
-            if (addPay != null) return Ok(addPay);
+            if (addPay != null)
+                return Ok(addPay);
 
             return BadRequest("There was an error happend");
         }
@@ -53,7 +55,7 @@ namespace ArchiveTrackingSystem.API.Controllers
         {
             if (paymentEditDto == null) return BadRequest("No Data For Edit");
 
-            var payMapper = _mapper.Map<TypePayment>(paymentEditDto);
+            var payMapper = _mapper.Map<Payment>(paymentEditDto);
             var editPay = await _paymentServices.UpdateAsync(payMapper);
             if (editPay != null) return Ok(editPay);
 
@@ -61,9 +63,9 @@ namespace ArchiveTrackingSystem.API.Controllers
         }
 
         [HttpDelete(PaymentRouting.Delete)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(string slug)
         {
-            var payment = await _paymentServices.Find(x => x.Id == id);
+            var payment = await _paymentServices.Find(x => x.Slug == slug);
             if (payment != null)
             {
                 var deleteActive = await _paymentServices.DeleteAsync(payment);

@@ -1,4 +1,5 @@
 ﻿using ArchiveTrackingSystem.Core.Entities;
+using ArchiveTrackingSystem.Core.Helper;
 using ArchiveTrackingSystem.Core.IRepoistories;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,8 @@ namespace ArchiveTrackingSystem.Core.Services
         }
         public async Task<Active> Create(Active active)
         {
+            active.CreateAt = DateTime.Now;
+            active.Slug = await GetUniqueNameAsync(active.Name);
             var addActive = await _activeRepository.CreateAsync(active);
             return addActive;
         }
@@ -36,10 +39,31 @@ namespace ArchiveTrackingSystem.Core.Services
         }
         public async Task<Active> UpdateAsync(Active active)
         {
+          
+           
+            // البحث عن الموظف باستخدام Slug
+            var existingActive = await _activeRepository.Find(e => e.Slug == active.Slug);
+
+            if (existingActive == null)
+            {
+                return null; // إذا لم يتم العثور على الموظف، أعد null
+            }
+
+
+            existingActive.Name = active.Name;
+            existingActive.Slug = await GetUniqueNameAsync(active.Name);
+            existingActive.NumberActive = active.NumberActive;
+            existingActive.Type = active.Type;
+            existingActive.Note = active.Note;
+            existingActive.UpdateAt = DateTime.Now;
+            existingActive.PaymentID = active.PaymentID;
            
 
-            var updateActive =await _activeRepository.UpdateAsync(active);
-            return updateActive;
+            // تنفيذ عملية التحديث
+            var updatedActive = await _activeRepository.UpdateAsync(existingActive);
+            return updatedActive;
+
+
         }
         public async Task<string> DeleteAsync(Active active)
         {
@@ -53,6 +77,21 @@ namespace ArchiveTrackingSystem.Core.Services
         {
             var actvive = await _activeRepository.Find(predicate , inclueds);
             return actvive;
+        }
+        public async Task<string> GetUniqueNameAsync(string arabicName)
+        {
+            string baseName = EncryptionName.ConvertArabicToEnglish(arabicName); // تحويل الاسم إلى إنجليزي
+            string uniqueName = baseName;
+            int counter = 1;
+
+            // التحقق من تكرار الاسم في قاعدة البيانات
+            while (await Find(x => x.Slug == uniqueName) != null)
+            {
+                uniqueName = $"{baseName}{counter}";
+                counter++;
+            }
+
+            return uniqueName;
         }
     }
 }

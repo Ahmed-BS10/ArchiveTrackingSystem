@@ -11,7 +11,7 @@ namespace ArchiveTrackingSystem.Core.Entities
         public string job { get; set; }
         public string Deparatment { get; set; }
         public DateTime CreateAt { get; set; }
-        public DateTime UpdateAt { get; set; }
+        public DateTime? UpdateAt { get; set; }
 
         // Navigation Property 
         public ICollection<FileOutsideArchive> fileOutsideArchives { get; set; }

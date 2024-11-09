@@ -18,7 +18,7 @@ namespace ArchiveTrackingSystem.EF.Data
         public DbSet<Core.Entities.File> Files { get; set; }
         public DbSet<Addrees> Addreess { get; set; }
         public DbSet<Active> Activte { get; set; }
-        public DbSet<TypePayment> TypePayments { get; set; }
+        public DbSet<Payment> TypePayments { get; set; }
         public DbSet<Employe> Employes { get; set; }
         public DbSet<FileOutsideArchive> FileOutsideArchives { get; set; }
 
@@ -28,39 +28,49 @@ namespace ArchiveTrackingSystem.EF.Data
             base.OnModelCreating(builder);
 
 
+
             builder.Entity<Employe>()
             .HasIndex(e => e.Slug)
             .IsUnique();
 
-            builder.Entity<TypePayment>()
-             .HasOne(tp => tp.activte)
-             .WithOne(ac => ac.typePayment)
-             .HasForeignKey<Active>(ac => ac.PaymentID);
+
+            builder.Entity<Active>()
+            .HasIndex(e => e.Slug)
+            .IsUnique();
 
 
-
+            builder.Entity<Payment>()
+           .HasIndex(e => e.Slug)
+           .IsUnique();
 
             builder.Entity<Employe>()
                 .HasMany(em => em.fileOutsideArchives)
                 .WithOne(fa => fa.employe)
                 .HasForeignKey(fa => fa.EmployeID);
 
+            builder.Entity<Payment>()
+             .HasMany(p => p.actives)
+             .WithOne(ac => ac.typePayment)
+             .HasForeignKey(ac => ac.PaymentID);
+
+
+
             builder.Entity<Core.Entities.File>()
                 .HasOne(fi => fi.activte)
-                .WithOne(ac => ac.file)
-                .HasForeignKey<Core.Entities.File>();
+                .WithMany(ac => ac.files)
+                .HasForeignKey(fi => fi.ActiveID);
 
 
             builder.Entity<Core.Entities.File>()
                .HasOne(fi => fi.addrees)
-               .WithOne((ad => ad.file))
-               .HasForeignKey<Core.Entities.File>();
+               .WithMany(ad => ad.files)
+               .HasForeignKey(fi => fi.AddressID);
 
 
             builder.Entity<Core.Entities.File>()
                .HasOne(fi => fi.typePayment)
-               .WithOne((ty => ty.file))
-               .HasForeignKey<Core.Entities.File>();
+               .WithMany(py => py.files)
+               .HasForeignKey(fi => fi.PaymentID);
 
 
             builder.Entity<Core.Entities.File>()

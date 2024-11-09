@@ -31,6 +31,8 @@ builder.Services.AddTransient<AuthenticatiomServices>();
 builder.Services.AddTransient<ActiveServices>();
 builder.Services.AddTransient<PaymentServices>();
 builder.Services.AddTransient<EmployeSrevices>();
+builder.Services.AddTransient<FileServices>();
+builder.Services.AddTransient<AddressServices>();
 #endregion
 
 #region Repoistory

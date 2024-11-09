@@ -12,6 +12,7 @@ namespace ArchiveTrackingSystem.Core.IRepoistories
 
         Task<IEnumerable<T>> GetListAsync();
         Task<T> CreateAsync(T entity);
+        Task<T> CreateAsync(T entity, T entity2);
         Task<T> UpdateAsync(T entity);
         Task<T> DeleteAsync(T entity);
         IQueryable<T> GetTableNoTracking();

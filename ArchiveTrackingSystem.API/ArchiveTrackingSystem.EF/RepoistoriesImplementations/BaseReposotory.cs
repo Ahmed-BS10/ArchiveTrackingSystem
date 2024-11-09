@@ -27,7 +27,17 @@ namespace ArchiveTrackingSystem.EF.RepoistoriesImplementations
             return entity;
 
         }
+        public async Task<T> CreateAsync(T entity , T entity2)
+        {
 
+            await _dbContext.Set<T>().AddAsync(entity2);
+            await _dbContext.Set<T>().AddAsync(entity);
+
+            await _dbContext.SaveChangesAsync();
+
+            return entity;
+
+        }
         public async Task<T> DeleteAsync(T entity)
         {
             _dbContext.Set<T>().Remove(entity);
@@ -51,8 +61,6 @@ namespace ArchiveTrackingSystem.EF.RepoistoriesImplementations
 
         public async Task<T> Find(Expression<Func<T, bool>> predicate, string[] includes = null)
         {
-
-
             IQueryable<T> values = _dbContext.Set<T>();
 
             if (includes != null)

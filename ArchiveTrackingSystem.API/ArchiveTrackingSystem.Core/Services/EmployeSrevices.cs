@@ -22,6 +22,8 @@ namespace ArchiveTrackingSystem.Core.Services
         }
         public async Task<Employe> CreateAsync(Employe employe)
         {
+            employe.CreateAt = DateTime.Now;
+            employe.Slug = await GetUniqueNameAsync(employe.Name);
             var addEmp = await _employeRepoistory.CreateAsync(employe);
             return addEmp;
         }
@@ -57,6 +59,7 @@ namespace ArchiveTrackingSystem.Core.Services
             existingEmploye.Slug = await GetUniqueNameAsync(employe.Name);
             existingEmploye.job = employe.job;
             existingEmploye.Deparatment = employe.Deparatment;
+            existingEmploye.UpdateAt = DateTime.Now;
 
             // تنفيذ عملية التحديث
             var updatedEmp = await _employeRepoistory.UpdateAsync(existingEmploye);

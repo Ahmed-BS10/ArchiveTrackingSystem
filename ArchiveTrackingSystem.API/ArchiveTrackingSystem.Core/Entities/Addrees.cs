@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ArchiveTrackingSystem.Core.Entities
 {
@@ -10,13 +11,12 @@ namespace ArchiveTrackingSystem.Core.Entities
         public string Dstrict { get; set; }
         public string ? Note {  get; set; }
         public DateTime CreateAt { get; set; }
-        public DateTime UpdateAt { get; set; }
-        public File file { get; set; }
+        public DateTime? UpdateAt { get; set; }
+
+        [JsonIgnore]
+        public ICollection<File> files { get; set; }
 
 
     }
-
-
-
 
 }

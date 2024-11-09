@@ -73,6 +73,7 @@ namespace ArchiveTrackingSystem.API.Controllers
                 return BadRequest(ModelState);
 
             var ActiveMapper = _mapper.Map<Active>(activeUpdateDto);
+            ActiveMapper.UpdateAt = DateTime.Now;
             var UpdateActive = await _activeServices.UpdateAsync(ActiveMapper);
 
             if(UpdateActive != null)
@@ -81,9 +82,9 @@ namespace ArchiveTrackingSystem.API.Controllers
         }
 
         [HttpDelete(ActiveRouting.Delete)]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete(string slug)
         {
-            var active = await _activeServices.Find(x => x.Id == id);
+            var active = await _activeServices.Find(x => x.Slug == slug);
             if (active != null)
             {
                 var deleteActive = await _activeServices.DeleteAsync(active);

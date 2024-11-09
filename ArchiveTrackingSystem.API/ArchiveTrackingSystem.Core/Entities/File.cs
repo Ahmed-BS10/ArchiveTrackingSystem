@@ -6,9 +6,11 @@ namespace ArchiveTrackingSystem.Core.Entities
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Slug { get; set; }
         public string CommercialNumber { get; set; }
         public string TaxNumber { get; set; }
-        public DateTime StartDate { get; set; }
+        public DateTime CreateAt { get; set; }
+        public DateTime? UpdateAt { get; set; }
         public int DocumentCount { get; set; }
         public string EmployeeName { get; set; }
         public string FileStatus { get; set; }
@@ -24,7 +26,7 @@ namespace ArchiveTrackingSystem.Core.Entities
         public Archive archive { get; set; }
         public Addrees addrees { get; set; }
         public Active activte { get; set; }
-        public TypePayment typePayment { get; set; }
+        public Payment typePayment { get; set; }
 
         public ICollection<FileOutsideArchive> fileOutsideArchives { get; set; }
     }

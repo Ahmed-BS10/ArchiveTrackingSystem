@@ -38,7 +38,6 @@ namespace ArchiveTrackingSystem.API.Controllers
                 return BadRequest("No Data For Add");
 
             var empMapper = _mapper.Map<Employe>(employeAddDto);
-            empMapper.Slug = await _employeSrevices.GetUniqueNameAsync(empMapper.Name);
 
             var addEmp = await _employeSrevices.CreateAsync(empMapper);
             if (addEmp != null)

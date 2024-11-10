@@ -8,7 +8,6 @@ using static ArchiveTrackingSystem.Core.Routes.Route;
 
 namespace ArchiveTrackingSystem.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class ActiveController : ControllerBase
     {
@@ -21,15 +20,28 @@ namespace ArchiveTrackingSystem.API.Controllers
             _mapper=mapper;
         }
 
+        [HttpGet(ActiveRouting.Get)]
+        public async Task<IActionResult> GetAsync(string slug)
+        {
+            var active = await _activeServices.Find(x => x.Slug == slug);
+
+            var activeMapper = _mapper.Map<ActiveGetWithIccluedDto>(active);
+            if (activeMapper != null)
+                return Ok(activeMapper);
+
+
+
+            return NotFound();
+        }
 
         [HttpGet(ActiveRouting.List)]
         public async Task<IActionResult> GetListAsync()
         {
-            var emps = await _activeServices.GetListAsync();
+            var actives = await _activeServices.GetListAsync();
 
-            var empsMapper = _mapper.Map<IEnumerable<ActiveGetDto>>(emps);
-            if (empsMapper != null)
-                return Ok(empsMapper);
+            var activeMapper = _mapper.Map<IEnumerable<ActiveGetWithIncludeDto>>(actives);
+            if (activeMapper != null)
+                return Ok(activeMapper);
 
 
 
@@ -51,7 +63,7 @@ namespace ArchiveTrackingSystem.API.Controllers
         }
 
         [HttpPost(ActiveRouting.Create)]
-        public async Task<IActionResult> Create([FromQuery]ActiveAddDto activeAddDto)
+        public async Task<IActionResult> CreateAsync([FromQuery]ActiveAddDto activeAddDto)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -67,7 +79,7 @@ namespace ArchiveTrackingSystem.API.Controllers
 
         }
         [HttpPut(ActiveRouting.Edit)]
-        public async Task<IActionResult> Update(ActiveUpdateDto activeUpdateDto)
+        public async Task<IActionResult> UpdateAsync(ActiveUpdateDto activeUpdateDto)
         {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -82,7 +94,7 @@ namespace ArchiveTrackingSystem.API.Controllers
         }
 
         [HttpDelete(ActiveRouting.Delete)]
-        public async Task<IActionResult> Delete(string slug)
+        public async Task<IActionResult> DeleteAsync(string slug)
         {
             var active = await _activeServices.Find(x => x.Slug == slug);
             if (active != null)

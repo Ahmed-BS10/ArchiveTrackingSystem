@@ -12,6 +12,7 @@
 
         // Navigation Property 
         public ICollection<Active>? actives { get; set; }
+        
         public ICollection<File>? files { get; set; }
        // public File? file { get; set; }
 

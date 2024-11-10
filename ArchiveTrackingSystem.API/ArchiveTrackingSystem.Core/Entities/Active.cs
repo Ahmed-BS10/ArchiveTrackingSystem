@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace ArchiveTrackingSystem.Core.Entities
 {
@@ -19,7 +20,8 @@ namespace ArchiveTrackingSystem.Core.Entities
         // Navigation Property
         [ForeignKey("PaymentID")]
         public Payment? typePayment { get; set; }
-     
+
+        [JsonIgnore]
         public ICollection<File> files {  get; set; }       
     }
 

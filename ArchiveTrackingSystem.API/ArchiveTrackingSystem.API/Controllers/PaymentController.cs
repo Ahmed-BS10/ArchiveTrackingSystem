@@ -9,7 +9,6 @@ using static ArchiveTrackingSystem.Core.Routes.Route;
 
 namespace ArchiveTrackingSystem.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class PaymentController : ControllerBase
     {
@@ -21,6 +20,20 @@ namespace ArchiveTrackingSystem.API.Controllers
             _paymentServices=paymentServices;
         }
 
+
+        [HttpGet(PaymentRouting.GetBySlug)]
+        public async Task<IActionResult> GetAsync(string slug)
+        {
+            var pay = await _paymentServices.Find(x => x.Slug == slug);
+
+            var payMapper = _mapper.Map<PaymentGetDto>(pay);
+            if (payMapper != null)
+                return Ok(payMapper);
+
+
+
+            return NotFound();
+        }
 
         [HttpGet(PaymentRouting.List)]
         public async Task<IActionResult> GetListAsync()
@@ -37,7 +50,7 @@ namespace ArchiveTrackingSystem.API.Controllers
         }
 
         [HttpPost(PaymentRouting.Create)]
-        public async Task<IActionResult> Create(PaymentAddDto paymentAddDto)
+        public async Task<IActionResult> CreateAsync(PaymentAddDto paymentAddDto)
         {
             if (paymentAddDto == null) return BadRequest("No Data For Add");
 
@@ -51,7 +64,7 @@ namespace ArchiveTrackingSystem.API.Controllers
         }
 
         [HttpPut(PaymentRouting.Edit)]
-        public async Task<IActionResult> Update(PaymentEditDto paymentEditDto)
+        public async Task<IActionResult> UpdateAsync(PaymentEditDto paymentEditDto)
         {
             if (paymentEditDto == null) return BadRequest("No Data For Edit");
 
@@ -63,7 +76,7 @@ namespace ArchiveTrackingSystem.API.Controllers
         }
 
         [HttpDelete(PaymentRouting.Delete)]
-        public async Task<IActionResult> Delete(string slug)
+        public async Task<IActionResult> DeleteAsync(string slug)
         {
             var payment = await _paymentServices.Find(x => x.Slug == slug);
             if (payment != null)

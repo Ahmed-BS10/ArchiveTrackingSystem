@@ -33,6 +33,7 @@ builder.Services.AddTransient<PaymentServices>();
 builder.Services.AddTransient<EmployeSrevices>();
 builder.Services.AddTransient<FileServices>();
 builder.Services.AddTransient<AddressServices>();
+builder.Services.AddTransient<FileOutSideServices>();
 #endregion
 
 #region Repoistory

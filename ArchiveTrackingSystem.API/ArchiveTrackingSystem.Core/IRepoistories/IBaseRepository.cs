@@ -9,7 +9,7 @@ namespace ArchiveTrackingSystem.Core.IRepoistories
 {
     public interface IBaseRepository<T> where T : class
     {
-
+       
         Task<IEnumerable<T>> GetListAsync();
         Task<T> CreateAsync(T entity);
         Task<T> CreateAsync(T entity, T entity2);
@@ -17,7 +17,6 @@ namespace ArchiveTrackingSystem.Core.IRepoistories
         Task<T> DeleteAsync(T entity);
         IQueryable<T> GetTableNoTracking();
         IQueryable<T> GetTableAsTracking();
-
         Task<IEnumerable<T>> GetListWithincludesAsync(string[] includes = null);
         Task<T> Find(Expression<Func<T, bool>> predicate, string[] includes = null);
 

@@ -13,7 +13,7 @@ namespace ArchiveTrackingSystem.Core.Dto.EmployeDtos
         public string job { get; set; }
         public string Deparatment { get; set; }
         public DateTime CreateAt { get; set; }
-        public DateTime UpdateAt { get; set; }
+        public DateTime? UpdateAt { get; set; }
 
     }
 }

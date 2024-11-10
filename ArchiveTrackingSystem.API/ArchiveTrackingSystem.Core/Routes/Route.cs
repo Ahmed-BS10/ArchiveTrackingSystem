@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ArchiveTrackingSystem.Core.Routes
+﻿namespace ArchiveTrackingSystem.Core.Routes
 {
     public static class Route
     {
@@ -43,10 +37,10 @@ namespace ArchiveTrackingSystem.Core.Routes
         {
             public const string Prefix = $"{Rule}Active/";
             public const string List = $"{Prefix}List";
-            public const string GetById = $"{Prefix}{"Id"}";
+            public const string Get = $"{Prefix}GetBy{"Slug"}";
             public const string Create = $"{Prefix}Create";
             public const string Edit = $"{Prefix}Edit";
-            public const string Delete = $"{Prefix}Delete{"Id"}";
+            public const string Delete = $"{Prefix}Delete{"Slug"}";
             public const string GetListWithincludes = $"{Prefix}GetListWithincludes";
 
         }
@@ -54,7 +48,7 @@ namespace ArchiveTrackingSystem.Core.Routes
         {
             public const string Prefix = $"{Rule}Paymnet/";
             public const string List = $"{Prefix}List";
-            public const string GetById = $"{Prefix}{"Id"}";
+            public const string GetBySlug = $"{Prefix}GetBy{"Slug"}";
             public const string Create = $"{Prefix}Create";
             public const string Edit = $"{Prefix}Edit";
             public const string Delete = $"{Prefix}Delete{"Id"}";
@@ -65,7 +59,7 @@ namespace ArchiveTrackingSystem.Core.Routes
         {
             public const string Prefix = $"{Rule}Employe/";
             public const string List = $"{Prefix}List";
-            public const string GetById = $"{Prefix}{"Id"}";
+            public const string GetBySlug = $"{Prefix}GetBy{"Slug"}";
             public const string Create = $"{Prefix}Create";
             public const string Edit = $"{Prefix}Edit";
             public const string Delete = $"{Prefix}Delete{"Id"}";
@@ -76,7 +70,20 @@ namespace ArchiveTrackingSystem.Core.Routes
         {
             public const string Prefix = $"{Rule}File/";
             public const string List = $"{Prefix}List";
-            public const string GetById = $"{Prefix}{"Id"}";
+            public const string GetBySlug = $"{Prefix}GetBy{"Slug"}";
+            public const string Create = $"{Prefix}Create";
+            public const string Edit = $"{Prefix}Edit";
+            public const string Delete = $"{Prefix}Delete{"Id"}";
+            public const string GetListWithincludes = $"{Prefix}GetListWithincludes";
+
+        }
+
+
+        public static class FileOutsiedRouting
+        {
+            public const string Prefix = $"{Rule}FileOutsied/";
+            public const string List = $"{Prefix}List";
+            public const string GetById = $"{Prefix}Get{"Id"}";
             public const string Create = $"{Prefix}Create";
             public const string Edit = $"{Prefix}Edit";
             public const string Delete = $"{Prefix}Delete{"Id"}";

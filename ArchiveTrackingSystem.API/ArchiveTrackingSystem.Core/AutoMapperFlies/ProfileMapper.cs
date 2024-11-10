@@ -2,6 +2,7 @@
 using ArchiveTrackingSystem.Core.Dto.AddressDtos;
 using ArchiveTrackingSystem.Core.Dto.EmployeDtos;
 using ArchiveTrackingSystem.Core.Dto.FileDtos;
+using ArchiveTrackingSystem.Core.Dto.FileOutsideArchive;
 using ArchiveTrackingSystem.Core.Dto.PaymentDtos;
 using ArchiveTrackingSystem.Core.Dto.RoleDtos;
 using ArchiveTrackingSystem.Core.Dto.UserDtos;
@@ -39,7 +40,7 @@ public class ProfileMapper : Profile
             .ForMember(dest => dest.TypePaymnet,
                        opt => opt.MapFrom(src => src.typePayment != null ? src.typePayment.Name : "لا يوجد"));
 
-        CreateMap<Active, ActiveGetDto>();
+        CreateMap<Active, ActiveGetWithIncludeDto>();
 
 
         CreateMap<ActiveUpdateDto, Active>()
@@ -70,7 +71,7 @@ public class ProfileMapper : Profile
         CreateMap<EmployeAddDto, Employe>();
 
         CreateMap<EmployeUpdateDto, Employe>();
-           
+
         CreateMap<Employe, EmployeGetDto>();
 
         #endregion
@@ -92,16 +93,26 @@ public class ProfileMapper : Profile
         CreateMap<File, FileGetDto>();
 
         CreateMap<File, FileGetWithIncludeDto>()
+            .ForMember(dest => dest.City, opt => opt.MapFrom(src => src.addrees.City))
+            .ForMember(dest => dest.Dstrict, opt => opt.MapFrom(src => src.addrees.Dstrict))
             .ForMember(dest => dest.Active, opt => opt.MapFrom(src => src.activte != null ? src.activte.Name : "لا يوجد"))
             .ForMember(dest => dest.Payment, opt => opt.MapFrom(src => src.typePayment != null ? src.typePayment.Name : "لا يوجد"))
-            .ForMember(dest => dest.Address, opt => opt.MapFrom(src => src.addrees != null ? src.addrees.Name : "لا يوجد"))
             .ForMember(dest => dest.Archive, opt => opt.MapFrom(src => src.archive != null ? src.archive.Name : "لا يوجد"));
 
 
 
         #endregion
 
+        #region FileOutSide Mapper
 
+        CreateMap<FileOutsideAddDto, FileOutsideArchive>();
+        CreateMap<FileOutsideUpdateDto, FileOutsideArchive>();
+
+        CreateMap<FileOutsideArchive, FileOutsideGetDto>()
+           .ForMember(dest => dest.Employe, opt => opt.MapFrom(src => src.employe.Name))
+           .ForMember(dest => dest.File, opt => opt.MapFrom(src => src.file.Name));
+
+        #endregion
 
     }
 

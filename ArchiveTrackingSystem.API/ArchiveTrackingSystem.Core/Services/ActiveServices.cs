@@ -75,6 +75,8 @@ namespace ArchiveTrackingSystem.Core.Services
         }
         public async Task<Active> Find(Expression<Func<Active , bool>> predicate , string[] inclueds = null)
         {
+            inclueds = ["typePayment"];
+
             var actvive = await _activeRepository.Find(predicate , inclueds);
             return actvive;
         }

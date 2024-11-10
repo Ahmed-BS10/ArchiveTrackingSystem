@@ -14,7 +14,8 @@
 
         // ForeignKey properties
         public string Archive { get; set; }
-        public string Address { get; set; }
+        public string City { get; set; }
+        public string Dstrict { get; set; }
         public string Active { get; set; }
         public string Payment { get; set; }
 

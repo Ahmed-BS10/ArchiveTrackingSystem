@@ -8,7 +8,6 @@ using static ArchiveTrackingSystem.Core.Routes.Route;
 
 namespace ArchiveTrackingSystem.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class EmployeController : ControllerBase
     {
@@ -21,18 +20,32 @@ namespace ArchiveTrackingSystem.API.Controllers
             _employeSrevices=employeSrevices;
         }
 
+        [HttpGet(EmployeRouting.GetBySlug)]
+        public async Task<IActionResult> GetAsync(string slug)
+        {
+            var emp = await _employeSrevices.Find(x => x.Slug == slug);
+
+            var empMapper = _mapper.Map<EmployeGetDto>(emp);
+            if (empMapper != null)
+                return Ok(empMapper);
+
+            return NotFound();
+        }
+
         [HttpGet(EmployeRouting.List)]
-        public async Task<IActionResult> GetList()
+        public async Task<IActionResult> GetListAsync()
         {
             var emps = await _employeSrevices.GetListAsync();
-            if (emps != null)
-                return Ok(emps);
+            var empMapper = _mapper.Map<IEnumerable<EmployeGetDto>>(emps);
+            
+            if (empMapper != null)
+                return Ok(empMapper);
 
             return NotFound();
         }
 
         [HttpPost(EmployeRouting.Create)]
-        public async Task<IActionResult> Create(EmployeAddDto employeAddDto)
+        public async Task<IActionResult> CreateAsync(EmployeAddDto employeAddDto)
         {
             if (employeAddDto == null)
                 return BadRequest("No Data For Add");
@@ -48,7 +61,7 @@ namespace ArchiveTrackingSystem.API.Controllers
         }
 
         [HttpPut(EmployeRouting.Edit)]
-        public async Task<IActionResult> Update(EmployeUpdateDto employeUpdateDto)
+        public async Task<IActionResult> UpdateAsync(EmployeUpdateDto employeUpdateDto)
         {
             if (employeUpdateDto == null)
                 return BadRequest("No Data For Update");
@@ -63,7 +76,7 @@ namespace ArchiveTrackingSystem.API.Controllers
         }
 
         [HttpDelete(EmployeRouting.Delete)]
-        public async Task<IActionResult> Delete(string slug)
+        public async Task<IActionResult> DeleteAsync(string slug)
         {
             var emp = await _employeSrevices.Find(x => x.Slug == slug);
             if (emp == null)

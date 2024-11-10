@@ -9,7 +9,6 @@ namespace ArchiveTrackingSystem.Core.Dto.AddressDtos
     public class AddressAddDto
     {
 
-        public string Name { get; set; }
         public string City { get; set; }
         public string Dstrict { get; set; }
         public string? Note { get; set; }

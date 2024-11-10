@@ -9,7 +9,6 @@ using static ArchiveTrackingSystem.Core.Routes.Route;
 
 namespace ArchiveTrackingSystem.API.Controllers
 {
-    //[Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
     {

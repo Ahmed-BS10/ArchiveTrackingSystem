@@ -27,9 +27,11 @@ namespace ArchiveTrackingSystem.Core.Services
         {
             return await _fileRepository.GetListAsync();
         }
-        public async Task<IEnumerable<Entities.File>> GetListWithIncludesAsync(string[] include = null)
+        public async Task<IEnumerable<Entities.File>> GetListWithIncludesAsync(string[] includes = null)
         {
-            var files = await _fileRepository.GetListWithincludesAsync(include);
+            includes = ["typePayment", "activte", "addrees", "archive"];
+
+            var files = await _fileRepository.GetListWithincludesAsync(includes);
             return files;
         }
 
@@ -85,6 +87,7 @@ namespace ArchiveTrackingSystem.Core.Services
         }
         public async Task<Entities.File> Find(Expression<Func<Entities.File, bool>> predicate, string[] inclueds = null)
         {
+            inclueds = ["typePayment" , "activte" , "addrees" , "archive"];
             var file = await _fileRepository.Find(predicate, inclueds);
             return file;
         }

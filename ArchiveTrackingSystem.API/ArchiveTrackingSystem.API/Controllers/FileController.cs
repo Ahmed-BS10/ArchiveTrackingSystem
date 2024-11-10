@@ -26,8 +26,22 @@ namespace ArchiveTrackingSystem.API.Controllers
         }
 
 
+        [HttpGet(FileRouting.GetBySlug)]
+        public async Task<IActionResult> GetAsync(string slug)
+        {
+            var file = await _fileServices.Find(x => x.Slug == slug);
+            if (file != null)
+            {
+                var fileMapper = _mapper.Map<FileGetWithIncludeDto>(file);
+                return Ok(fileMapper);
+            }
+
+
+            return NotFound();
+        }
+
         [HttpGet(FileRouting.List)]
-        public async Task<IActionResult> GetList()
+        public async Task<IActionResult> GetListAsync()
         {
             var files = await _fileServices.GetListAsync();
             if (files != null)
@@ -41,9 +55,9 @@ namespace ArchiveTrackingSystem.API.Controllers
         }
 
         [HttpGet(FileRouting.GetListWithincludes)]
-        public async Task<IActionResult> GetListWithincludesAsync([FromQuery] string[] inclueds = null)
+        public async Task<IActionResult> GetListWithincludesAsync()
         {
-            var flies = await _fileServices.GetListWithIncludesAsync(inclueds);
+            var flies = await _fileServices.GetListWithIncludesAsync();
 
             var fileMapper = _mapper.Map<IEnumerable<FileGetWithIncludeDto>>(flies);
             if (fileMapper != null)
@@ -54,9 +68,8 @@ namespace ArchiveTrackingSystem.API.Controllers
             return NotFound();
         }
 
-
         [HttpPost(FileRouting.Create)]
-        public async Task<IActionResult> Create(FileAddDto fileAddDto)
+        public async Task<IActionResult> CreateAync(FileAddDto fileAddDto)
         {
             if (fileAddDto == null || !ModelState.IsValid)
                 return BadRequest("Invalid data. Please check the input.");
@@ -76,13 +89,13 @@ namespace ArchiveTrackingSystem.API.Controllers
             var addFile = await _fileServices.CreateAsync(fileMapper);
 
             if (addFile != null)
-                return CreatedAtAction(nameof(Create), new { id = addFile.Id }, addFile);
+                return Ok(fileAddDto);
 
             return BadRequest("An error occurred while adding the file.");
         }
 
         [HttpPut(FileRouting.Edit)]
-        public async Task<IActionResult> Update(FileUpdateDto fileUpdateDto)
+        public async Task<IActionResult> UpdateAync(FileUpdateDto fileUpdateDto)
         {
             if (fileUpdateDto == null)
                 return BadRequest("No Data For Update");
@@ -96,7 +109,7 @@ namespace ArchiveTrackingSystem.API.Controllers
             return BadRequest();
         }
         [HttpDelete(FileRouting.Delete)]
-        public async Task<IActionResult> Delete(string slug)
+        public async Task<IActionResult> DeleteAync(string slug)
         {
             var file = await _fileServices.Find(x => x.Slug == slug);
             if (file == null)

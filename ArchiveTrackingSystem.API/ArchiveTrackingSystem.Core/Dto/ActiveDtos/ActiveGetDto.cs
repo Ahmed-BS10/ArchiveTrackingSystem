@@ -1,6 +1,6 @@
 ﻿namespace ArchiveTrackingSystem.Core.Dto.ActiveDtos
 {
-    public class ActiveGetDto
+    public class ActiveGetWithIncludeDto
     {
         public string NumberActive { get; set; }
         public string Name { get; set; }

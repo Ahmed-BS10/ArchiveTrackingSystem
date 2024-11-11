@@ -109,6 +109,22 @@ namespace ArchiveTrackingSystem.EF.RepoistoriesImplementations
             return entity;
         }
 
-        
+        public IQueryable<T> GetListWithincludesQueryable(string[] includes = null)
+        {
+            // التأكد من تهيئة `DbSet` الأساسي من أجل الكائنات
+            IQueryable<T> query = _dbContext.Set<T>();
+
+            // إضافة كل الكيانات المطلوبة للانضمام إلى الاستعلام
+            if (includes != null)
+            {
+                foreach (var include in includes)
+                {
+                    query = query.Include(include);
+                }
+            }
+
+            return query;
+        }
+
     }
 }

@@ -16,13 +16,12 @@ namespace ArchiveTrackingSystem.Core.Dto.FileDtos
 
         // ForeignKey properties
         public int ArchiveID { get; set; }
-        public int AddressID { get; set; }
         public int ActiveID { get; set; }
         public int PaymentID { get; set; }
 
         // Navigation properties
 
-        public AddressAddDto address { get; set; }
+        public AddressUpdateDto address { get; set; }
 
     }
 }

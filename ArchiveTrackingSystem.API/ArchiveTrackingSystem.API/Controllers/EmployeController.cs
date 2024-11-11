@@ -1,4 +1,5 @@
-﻿using ArchiveTrackingSystem.Core.Dto.EmployeDtos;
+﻿using ArchiveTrackingSystem.Core.Dto.ActiveDtos;
+using ArchiveTrackingSystem.Core.Dto.EmployeDtos;
 using ArchiveTrackingSystem.Core.Entities;
 using ArchiveTrackingSystem.Core.Services;
 using AutoMapper;
@@ -49,6 +50,10 @@ namespace ArchiveTrackingSystem.API.Controllers
         {
             if (employeAddDto == null)
                 return BadRequest("No Data For Add");
+
+            var emp = await _employeSrevices.Find(x => x.Name == employeAddDto.Name);
+            if (emp != null)
+                return BadRequest($"The name is {employeAddDto.Name}already used");
 
             var empMapper = _mapper.Map<Employe>(employeAddDto);
 

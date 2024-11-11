@@ -1,6 +1,9 @@
-﻿using ArchiveTrackingSystem.Core.Entities;
+﻿using ArchiveTrackingSystem.Core.Dto.FileDtos;
+using ArchiveTrackingSystem.Core.Entities;
 using ArchiveTrackingSystem.Core.Helper;
 using ArchiveTrackingSystem.Core.IRepoistories;
+using AutoMapper.QueryableExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
@@ -27,13 +30,74 @@ namespace ArchiveTrackingSystem.Core.Services
         {
             return await _fileRepository.GetListAsync();
         }
-        public async Task<IEnumerable<Entities.File>> GetListWithIncludesAsync(string[] includes = null)
-        {
-            includes = ["typePayment", "activte", "addrees", "archive"];
+        //public async Task<IEnumerable<Entities.File>> GetListWithIncludesAsync(string[] includes = null)
+        //{
+        //    includes = ["typePayment", "activte", "addrees", "archive"];
 
-            var files = await _fileRepository.GetListWithincludesAsync(includes);
+        //    var files = await _fileRepository.GetListWithincludesAsync(includes);
+        //    return files;
+        //}
+
+
+        public async Task<IEnumerable<Entities.File>> GetListWithIncludesAsync(
+      string[] includes = null,
+      DateTime? startDate = null,
+      DateTime? endDate = null,
+      string archive = null,
+      string activte = null,
+      string payment = null,
+      string city = null,
+      string Dstrict = null)
+        {
+            // تحديد الكيانات التي يجب تضمينها بشكل دائم
+            includes = new[] { "typePayment", "activte", "addrees", "archive" };
+
+            // جلب الملفات مع تضمين الكيانات المطلوبة كـ IQueryable
+            var query = _fileRepository.GetListWithincludesQueryable(includes);
+
+            // إضافة شرط الفلترة حسب التاريخ إذا تم تحديده
+            if (startDate.HasValue)
+            {
+                query = query.Where(file => file.CreateAt >= startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                query = query.Where(file => file.CreateAt <= endDate.Value);
+            }
+
+            // إضافة شرط الفلترة حسب النوع إذا تم تحديده
+            if (!string.IsNullOrEmpty(activte))
+            {
+                query = query.Where(file => file.activte != null && file.activte.Name == activte);
+            }
+            if (!string.IsNullOrEmpty(archive))
+            {
+                query = query.Where(file => file.archive != null && file.archive.Name == archive);
+            }
+
+            // إضافة شرط الفلترة حسب معرف الدفع إذا تم تحديده
+            if (!string.IsNullOrEmpty(payment))
+            {
+                query = query.Where(file => file.typePayment != null && file.typePayment.Name == payment);
+            }
+
+            // إضافة شرط الفلترة حسب العنوان إذا تم تحديده
+            if (!string.IsNullOrEmpty(city))
+            {
+                query = query.Where(file => file.addrees != null && file.addrees.City.Contains(city));
+            }
+
+            if (!string.IsNullOrEmpty(Dstrict))
+            {
+                query = query.Where(file => file.addrees != null && file.addrees.Dstrict.Contains(Dstrict));
+            }
+
+
+            var files = await query.ToListAsync();
             return files;
         }
+
 
         public async Task<Entities.File> CreateAsync(Entities.File file)
         {
@@ -53,7 +117,7 @@ namespace ArchiveTrackingSystem.Core.Services
 
 
         }
-        public async Task<Entities.File> UpateAsync(Entities.File file )
+        public async Task<Entities.File> UpateAsync(Entities.File file)
         {
 
             // البحث عن الموظف باستخدام Slug
@@ -87,7 +151,7 @@ namespace ArchiveTrackingSystem.Core.Services
         }
         public async Task<Entities.File> Find(Expression<Func<Entities.File, bool>> predicate, string[] inclueds = null)
         {
-            inclueds = ["typePayment" , "activte" , "addrees" , "archive"];
+            inclueds = ["typePayment", "activte", "addrees", "archive"];
             var file = await _fileRepository.Find(predicate, inclueds);
             return file;
         }
@@ -109,4 +173,6 @@ namespace ArchiveTrackingSystem.Core.Services
 
 
     }
+
+
 }

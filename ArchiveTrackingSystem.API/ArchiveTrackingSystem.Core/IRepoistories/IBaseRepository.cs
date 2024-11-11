@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -19,6 +20,8 @@ namespace ArchiveTrackingSystem.Core.IRepoistories
         IQueryable<T> GetTableAsTracking();
         Task<IEnumerable<T>> GetListWithincludesAsync(string[] includes = null);
         Task<T> Find(Expression<Func<T, bool>> predicate, string[] includes = null);
+        IQueryable<T> GetListWithincludesQueryable(string[] includes = null);
+        
 
 
     }

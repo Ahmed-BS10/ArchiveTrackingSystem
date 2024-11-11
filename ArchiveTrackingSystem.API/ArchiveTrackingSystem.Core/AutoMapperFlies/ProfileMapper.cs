@@ -1,5 +1,6 @@
 ﻿using ArchiveTrackingSystem.Core.Dto.ActiveDtos;
 using ArchiveTrackingSystem.Core.Dto.AddressDtos;
+using ArchiveTrackingSystem.Core.Dto.ArchiveDtos;
 using ArchiveTrackingSystem.Core.Dto.EmployeDtos;
 using ArchiveTrackingSystem.Core.Dto.FileDtos;
 using ArchiveTrackingSystem.Core.Dto.FileOutsideArchive;
@@ -78,8 +79,9 @@ public class ProfileMapper : Profile
 
         #region Addrees Mapper
 
-        CreateMap<AddressAddDto, Addrees>()
-           .ForMember(dest => dest.CreateAt, opt => opt.MapFrom(src => DateTime.Now));
+        CreateMap<AddressAddDto, Addrees>();
+
+        CreateMap<AddressUpdateDto, Addrees>();
         #endregion
 
         #region File Mapper
@@ -111,6 +113,17 @@ public class ProfileMapper : Profile
         CreateMap<FileOutsideArchive, FileOutsideGetDto>()
            .ForMember(dest => dest.Employe, opt => opt.MapFrom(src => src.employe.Name))
            .ForMember(dest => dest.File, opt => opt.MapFrom(src => src.file.Name));
+
+        #endregion
+
+        #region Archive Mapper 
+
+        CreateMap<ArchiveAddDto, Archive>();
+
+        CreateMap<ArchiveUpdateDto, Archive>();
+
+        CreateMap<Archive, ArchiveGetDto>()
+            .ForMember(dest => dest.Files, opt => opt.MapFrom(src => src.Files.Select(x => x.Name)));
 
         #endregion
 

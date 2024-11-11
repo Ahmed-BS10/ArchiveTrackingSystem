@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArchiveTrackingSystem.EF.Migrations
 {
     [DbContext(typeof(ArchiveTrackingDbContext))]
-    [Migration("20241109205804_z3")]
-    partial class z3
+    [Migration("20241110165420_z1")]
+    partial class z1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -87,10 +87,6 @@ namespace ArchiveTrackingSystem.EF.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Dstrict")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

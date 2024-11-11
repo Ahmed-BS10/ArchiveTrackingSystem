@@ -1,16 +1,18 @@
 ﻿using ArchiveTrackingSystem.Core.Dto.ActiveDtos;
 using ArchiveTrackingSystem.Core.Dto.EmployeDtos;
 using ArchiveTrackingSystem.Core.Dto.FileDtos;
+using ArchiveTrackingSystem.Core.Dto.RoleDtos;
 using ArchiveTrackingSystem.Core.Entities;
 using ArchiveTrackingSystem.Core.Services;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using static ArchiveTrackingSystem.Core.Routes.Route;
 
 namespace ArchiveTrackingSystem.API.Controllers
 {
-   
+
     [ApiController]
     public class FileController : ControllerBase
     {
@@ -49,24 +51,56 @@ namespace ArchiveTrackingSystem.API.Controllers
                 var fileMapper = _mapper.Map<IEnumerable<FileGetDto>>(files);
                 return Ok(fileMapper);
             }
-               
+
 
             return NotFound();
         }
 
-        [HttpGet(FileRouting.GetListWithincludes)]
-        public async Task<IActionResult> GetListWithincludesAsync()
-        {
-            var flies = await _fileServices.GetListWithIncludesAsync();
+        //[HttpGet(FileRouting.GetListWithincludes)]
+        //public async Task<IActionResult> GetListWithincludesAsync()
+        //{
+        //    var flies = await _fileServices.GetListWithIncludesAsync();
 
-            var fileMapper = _mapper.Map<IEnumerable<FileGetWithIncludeDto>>(flies);
-            if (fileMapper != null)
+        //    var fileMapper = _mapper.Map<IEnumerable<FileGetWithIncludeDto>>(flies);
+        //    if (fileMapper != null)
+        //        return Ok(fileMapper);
+
+
+
+        //    return NotFound();
+        //}
+        [HttpGet("GetListWithincludes")]
+        public async Task<IActionResult> GetListWithincludesAsync(
+    [FromQuery] DateTime? startDate = null,
+    [FromQuery] DateTime? endDate = null,
+    [FromQuery] string archive = null,
+    [FromQuery] string payment = null,
+    [FromQuery] string city = null,
+    [FromQuery] string activte = null,
+    [FromQuery] string Dstrict = null)
+        {
+            // استدعاء الخدمة مع تمرير معاملات الفلترة
+            var files = await _fileServices.GetListWithIncludesAsync(
+
+                startDate: startDate,
+                endDate: endDate,
+                archive: archive,
+                activte: activte,
+                payment: payment,
+                city: city,
+                Dstrict: Dstrict
+            );
+
+            // تحويل النتائج إلى DTO باستخدام AutoMapper
+            var fileMapper = _mapper.Map<IEnumerable<FileGetWithIncludeDto>>(files);
+
+            // التحقق من النتيجة قبل الإرجاع
+            if (fileMapper != null && fileMapper.Any())
                 return Ok(fileMapper);
 
-
-
             return NotFound();
         }
+
 
         [HttpPost(FileRouting.Create)]
         public async Task<IActionResult> CreateAync(FileAddDto fileAddDto)
@@ -74,9 +108,15 @@ namespace ArchiveTrackingSystem.API.Controllers
             if (fileAddDto == null || !ModelState.IsValid)
                 return BadRequest("Invalid data. Please check the input.");
 
-           
+
+            var file = await _fileServices.Find(x => x.Name == fileAddDto.Name);
+            if (file != null)
+                return BadRequest($"The name is {fileAddDto.Name}already used");
+
+
+
             var fileMapper = _mapper.Map<ArchiveTrackingSystem.Core.Entities.File>(fileAddDto);
- 
+
             if (fileAddDto.address != null)
             {
                 var addressEntity = _mapper.Map<Addrees>(fileAddDto.address);
@@ -100,14 +140,28 @@ namespace ArchiveTrackingSystem.API.Controllers
             if (fileUpdateDto == null)
                 return BadRequest("No Data For Update");
 
-            var fileMapper = _mapper.Map<Core.Entities.File>(fileUpdateDto);
-            var updateFile = await _fileServices.UpateAsync(fileMapper);
+            var file = await _fileServices.Find(x => x.Slug == fileUpdateDto.Slug);
 
-            if (updateFile != null)
-                return Ok(updateFile);
 
+            var addressMapper = _mapper.Map<Addrees>(fileUpdateDto.address);
+            addressMapper.Id = file.AddressID;
+
+            var createdAddress = await _addressServices.UpdateAsync(addressMapper);
+
+            if(createdAddress != null)
+            {
+                var fileMapper = _mapper.Map<Core.Entities.File>(fileUpdateDto);
+                fileMapper.AddressID = addressMapper.Id;
+                var updateFile = await _fileServices.UpateAsync(fileMapper);
+
+                if (updateFile != null)
+                    return Ok("Successed Edit ");
+            }
+
+           
             return BadRequest();
         }
+
         [HttpDelete(FileRouting.Delete)]
         public async Task<IActionResult> DeleteAync(string slug)
         {
@@ -124,7 +178,6 @@ namespace ArchiveTrackingSystem.API.Controllers
 
             return BadRequest();
         }
-       
 
     }
 }

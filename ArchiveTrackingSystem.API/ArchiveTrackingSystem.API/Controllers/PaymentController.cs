@@ -54,6 +54,10 @@ namespace ArchiveTrackingSystem.API.Controllers
         {
             if (paymentAddDto == null) return BadRequest("No Data For Add");
 
+            var pyment = await _paymentServices.Find(x => x.Name == paymentAddDto.Name);
+            if (pyment != null)
+                return BadRequest($"The name is {paymentAddDto.Name}already used");
+
             var payMapper = _mapper.Map<Payment>(paymentAddDto);
 
             var addPay = await _paymentServices.CreateAsync(payMapper);

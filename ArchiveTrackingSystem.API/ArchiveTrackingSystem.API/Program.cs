@@ -34,6 +34,7 @@ builder.Services.AddTransient<EmployeSrevices>();
 builder.Services.AddTransient<FileServices>();
 builder.Services.AddTransient<AddressServices>();
 builder.Services.AddTransient<FileOutSideServices>();
+builder.Services.AddTransient<ArchiveServices>();
 #endregion
 
 #region Repoistory

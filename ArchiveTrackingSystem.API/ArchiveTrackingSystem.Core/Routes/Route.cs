@@ -90,5 +90,17 @@
             public const string GetListWithincludes = $"{Prefix}GetListWithincludes";
 
         }
+
+        public static class ArchiveRouting
+        {
+            public const string Prefix = $"{Rule} Archive/";
+            public const string List = $"{Prefix}List";
+            public const string GetBySlug = $"{Prefix}Get{"Slug"}";
+            public const string Create = $"{Prefix}Create";
+            public const string Edit = $"{Prefix}Edit";
+            public const string Delete = $"{Prefix}Delete{"Id"}";
+            public const string GetListWithincludes = $"{Prefix}GetListWithincludes";
+
+        }
     }
 }

@@ -68,7 +68,12 @@ namespace ArchiveTrackingSystem.API.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
+            var active = await _activeServices.Find(x => x.Name == activeAddDto.Name);
+            if (active != null)
+                return BadRequest($"The name is {activeAddDto.Name}already used");
+
             var activeMapper = _mapper.Map<Active>(activeAddDto);
+           
 
             var createActive = await _activeServices.Create(activeMapper);
             if (createActive != null)

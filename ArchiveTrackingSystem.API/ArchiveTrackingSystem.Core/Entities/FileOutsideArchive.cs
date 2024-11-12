@@ -9,7 +9,6 @@ namespace ArchiveTrackingSystem.Core.Entities
         public DateTime? UpdateAt { get; set; }
         public DateTime? ReturnDate { get; set; }
         public DateTime ReceiptDate { get; set; }
-
         public string Status { get; set; }
 
         // ForeignKey

@@ -1,11 +1,14 @@
-﻿using ArchiveTrackingSystem.Core.Services;
+﻿using ArchiveTrackingSystem.Core.Constant;
+using ArchiveTrackingSystem.Core.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using static ArchiveTrackingSystem.Core.Routes.Route;
 
 namespace ArchiveTrackingSystem.API.Controllers
 {
+    [Authorize(Roles = AuthorizationRoles.Admin + "," + AuthorizationRoles.Responsible)]
 
     [ApiController]
     public class AuthorizationController : ControllerBase

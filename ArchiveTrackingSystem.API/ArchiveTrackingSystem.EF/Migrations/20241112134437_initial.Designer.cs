@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ArchiveTrackingSystem.EF.Migrations
 {
     [DbContext(typeof(ArchiveTrackingDbContext))]
-    [Migration("20241110165420_z1")]
-    partial class z1
+    [Migration("20241112134437_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -116,6 +116,10 @@ namespace ArchiveTrackingSystem.EF.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("UpdateAt")
                         .HasColumnType("datetime2");
 
@@ -179,10 +183,6 @@ namespace ArchiveTrackingSystem.EF.Migrations
                     b.Property<int>("ArchiveID")
                         .HasColumnType("int");
 
-                    b.Property<string>("CommercialNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
@@ -193,11 +193,15 @@ namespace ArchiveTrackingSystem.EF.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FileStatus")
+                    b.Property<string>("ExclusiveNymber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FileNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -213,6 +217,14 @@ namespace ArchiveTrackingSystem.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaxNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TaxpayerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TradeName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

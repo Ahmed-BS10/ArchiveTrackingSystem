@@ -180,10 +180,6 @@ namespace ArchiveTrackingSystem.EF.Migrations
                     b.Property<int>("ArchiveID")
                         .HasColumnType("int");
 
-                    b.Property<string>("CommercialNumber")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
 
@@ -194,11 +190,15 @@ namespace ArchiveTrackingSystem.EF.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("FileStatus")
+                    b.Property<string>("ExclusiveNymber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("FileNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -214,6 +214,14 @@ namespace ArchiveTrackingSystem.EF.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("TaxNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TaxpayerName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TradeName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

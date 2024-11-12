@@ -1,10 +1,12 @@
-﻿using ArchiveTrackingSystem.Core.Dto.ActiveDtos;
+﻿using ArchiveTrackingSystem.Core.Constant;
+using ArchiveTrackingSystem.Core.Dto.ActiveDtos;
 using ArchiveTrackingSystem.Core.Dto.EmployeDtos;
 using ArchiveTrackingSystem.Core.Dto.FileDtos;
 using ArchiveTrackingSystem.Core.Dto.RoleDtos;
 using ArchiveTrackingSystem.Core.Entities;
 using ArchiveTrackingSystem.Core.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -12,7 +14,6 @@ using static ArchiveTrackingSystem.Core.Routes.Route;
 
 namespace ArchiveTrackingSystem.API.Controllers
 {
-
     [ApiController]
     public class FileController : ControllerBase
     {
@@ -28,6 +29,8 @@ namespace ArchiveTrackingSystem.API.Controllers
         }
 
 
+
+        [Authorize(Roles = AuthorizationRoles.Admin + "," + AuthorizationRoles.Responsible)]
         [HttpGet(FileRouting.GetBySlug)]
         public async Task<IActionResult> GetAsync(string slug)
         {
@@ -42,6 +45,10 @@ namespace ArchiveTrackingSystem.API.Controllers
             return NotFound();
         }
 
+
+
+
+        [Authorize(Roles = AuthorizationRoles.Admin + "," + AuthorizationRoles.Responsible)]
         [HttpGet(FileRouting.List)]
         public async Task<IActionResult> GetListAsync()
         {
@@ -56,28 +63,12 @@ namespace ArchiveTrackingSystem.API.Controllers
             return NotFound();
         }
 
-        //[HttpGet(FileRouting.GetListWithincludes)]
-        //public async Task<IActionResult> GetListWithincludesAsync()
-        //{
-        //    var flies = await _fileServices.GetListWithIncludesAsync();
-
-        //    var fileMapper = _mapper.Map<IEnumerable<FileGetWithIncludeDto>>(flies);
-        //    if (fileMapper != null)
-        //        return Ok(fileMapper);
 
 
 
-        //    return NotFound();
-        //}
+        [Authorize(Roles = AuthorizationRoles.Admin + "," + AuthorizationRoles.Responsible + "," + AuthorizationRoles.Show)]
         [HttpGet("GetListWithincludes")]
-        public async Task<IActionResult> GetListWithincludesAsync(
-    [FromQuery] DateTime? startDate = null,
-    [FromQuery] DateTime? endDate = null,
-    [FromQuery] string archive = null,
-    [FromQuery] string payment = null,
-    [FromQuery] string city = null,
-    [FromQuery] string activte = null,
-    [FromQuery] string Dstrict = null)
+        public async Task<IActionResult> GetListWithincludesAsync([FromQuery] DateTime? startDate = null,[FromQuery] DateTime? endDate = null,[FromQuery] string archive = null,[FromQuery] string payment = null,[FromQuery] string city = null,[FromQuery] string activte = null,[FromQuery] string Dstrict = null)
         {
             // استدعاء الخدمة مع تمرير معاملات الفلترة
             var files = await _fileServices.GetListWithIncludesAsync(
@@ -102,6 +93,9 @@ namespace ArchiveTrackingSystem.API.Controllers
         }
 
 
+
+
+        [Authorize(Roles = AuthorizationRoles.Admin + "," + AuthorizationRoles.Responsible + "," +AuthorizationRoles.Create)]
         [HttpPost(FileRouting.Create)]
         public async Task<IActionResult> CreateAync(FileAddDto fileAddDto)
         {
@@ -109,9 +103,9 @@ namespace ArchiveTrackingSystem.API.Controllers
                 return BadRequest("Invalid data. Please check the input.");
 
 
-            var file = await _fileServices.Find(x => x.Name == fileAddDto.Name);
+            var file = await _fileServices.Find(x => x.FileNumber == fileAddDto.FileNumber);
             if (file != null)
-                return BadRequest($"The name is {fileAddDto.Name}already used");
+                return BadRequest($"The name is {fileAddDto.FileNumber}already used");
 
 
 
@@ -134,6 +128,10 @@ namespace ArchiveTrackingSystem.API.Controllers
             return BadRequest("An error occurred while adding the file.");
         }
 
+
+
+
+        [Authorize(Roles = AuthorizationRoles.Admin + "," + AuthorizationRoles.Responsible)]
         [HttpPut(FileRouting.Edit)]
         public async Task<IActionResult> UpdateAync(FileUpdateDto fileUpdateDto)
         {
@@ -162,6 +160,10 @@ namespace ArchiveTrackingSystem.API.Controllers
             return BadRequest();
         }
 
+
+
+
+        [Authorize(Roles = AuthorizationRoles.Admin + "," + AuthorizationRoles.Responsible)]
         [HttpDelete(FileRouting.Delete)]
         public async Task<IActionResult> DeleteAync(string slug)
         {
@@ -181,3 +183,6 @@ namespace ArchiveTrackingSystem.API.Controllers
 
     }
 }
+
+
+

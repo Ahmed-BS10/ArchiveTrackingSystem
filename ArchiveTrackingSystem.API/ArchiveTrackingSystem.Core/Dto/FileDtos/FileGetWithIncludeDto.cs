@@ -3,10 +3,11 @@
     public class FileGetWithIncludeDto
     {
 
-        public string Name { get; set; }
-        public string CommercialNumber { get; set; }
+        public string FileNumber { get; set; }
+        public string TaxpayerName { get; set; }
+        public string TradeName { get; set; }
         public string TaxNumber { get; set; }
-        public DateTime StartDate { get; set; }
+        public string ExclusiveNymber { get; set; }
         public int DocumentCount { get; set; }
         public string EmployeeName { get; set; }
         public string FileStatus { get; set; }

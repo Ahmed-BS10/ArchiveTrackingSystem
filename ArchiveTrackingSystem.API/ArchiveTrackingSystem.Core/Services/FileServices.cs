@@ -102,7 +102,7 @@ namespace ArchiveTrackingSystem.Core.Services
         public async Task<Entities.File> CreateAsync(Entities.File file)
         {
             file.CreateAt = DateTime.Now;
-            file.Slug = await GetUniqueNameAsync(file.Name);
+            file.Slug = await GetUniqueNameAsync(file.FileNumber);
             var addFile = await _fileRepository.CreateAsync(file);
             return addFile;
 
@@ -129,11 +129,14 @@ namespace ArchiveTrackingSystem.Core.Services
             }
 
             // تحديث الحقول المطلوبة
-            existingFile.Name = file.Name;
-            existingFile.Slug = await GetUniqueNameAsync(file.Name);
+            existingFile.FileNumber = file.FileNumber;
+            existingFile.ExclusiveNymber = file.ExclusiveNymber;
+            existingFile.TaxpayerName = file.TaxpayerName;
+            existingFile.TradeName = file.TradeName;
+            existingFile.Slug = await GetUniqueNameAsync(file.FileNumber);
             existingFile.TaxNumber = file.TaxNumber;
             existingFile.EmployeeName = file.EmployeeName;
-            existingFile.CommercialNumber = file.CommercialNumber;
+            existingFile.TradeName = file.TradeName;
             existingFile.DocumentCount = file.DocumentCount;
             existingFile.Notes = file.Notes;
             existingFile.ActiveID = file.ActiveID;

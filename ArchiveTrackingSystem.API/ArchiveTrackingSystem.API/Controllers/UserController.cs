@@ -1,7 +1,9 @@
-﻿using ArchiveTrackingSystem.Core.Dto.UserDtos;
+﻿using ArchiveTrackingSystem.Core.Constant;
+using ArchiveTrackingSystem.Core.Dto.UserDtos;
 using ArchiveTrackingSystem.Core.Entities;
 using ArchiveTrackingSystem.Core.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
@@ -9,7 +11,10 @@ using static ArchiveTrackingSystem.Core.Routes.Route;
 
 namespace ArchiveTrackingSystem.API.Controllers
 {
+
+
     [ApiController]
+    [Authorize(Roles = AuthorizationRoles.Admin + "," + AuthorizationRoles.Responsible)]
     public class UserController : ControllerBase
     {
         private UserServices _userServices;
@@ -20,6 +25,8 @@ namespace ArchiveTrackingSystem.API.Controllers
             _userServices=userServices;
             _mapper=mapper;
         }
+
+        [AllowAnonymous]
 
         [HttpPost(UserRouting.Create)]
         public async Task<IActionResult> CreateAsync([FromBody]UserAddDto userAddDto , string role)
@@ -36,6 +43,7 @@ namespace ArchiveTrackingSystem.API.Controllers
                 default: return Ok(addResult);
             }
         }
+
 
         [HttpGet(UserRouting.List)]
         public async Task<IActionResult> GetList()

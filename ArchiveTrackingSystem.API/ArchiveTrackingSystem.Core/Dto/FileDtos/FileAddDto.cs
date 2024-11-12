@@ -11,18 +11,16 @@ namespace ArchiveTrackingSystem.Core.Dto.FileDtos
 {
     public class FileAddDto
     {
-        [Required]
-        public string Name { get; set; }
-        [Required]
-        public string CommercialNumber { get; set; }
-        [Required]
+      
+        public string FileNumber { get; set; }
+        public string TaxpayerName { get; set; }
+        public string TradeName { get; set; }
         public string TaxNumber { get; set; }
-        [Required]
+        public string ExclusiveNymber { get; set; }
         public int DocumentCount { get; set; }
-        [Required]
         public string EmployeeName { get; set; }
         public string FileStatus { get; set; }
-        public string? Notes { get; set; }
+        public string Notes { get; set; }
 
         // ForeignKey properties
         public int? ArchiveID { get; set; }

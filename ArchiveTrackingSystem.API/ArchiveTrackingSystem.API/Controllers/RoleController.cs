@@ -1,7 +1,9 @@
-﻿using ArchiveTrackingSystem.Core.Dto.RoleDtos;
+﻿using ArchiveTrackingSystem.Core.Constant;
+using ArchiveTrackingSystem.Core.Dto.RoleDtos;
 using ArchiveTrackingSystem.Core.Entities;
 using ArchiveTrackingSystem.Core.Services;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Writers;
@@ -11,6 +13,8 @@ namespace ArchiveTrackingSystem.API.Controllers
 {
 
     [ApiController]
+    [Authorize(Roles = AuthorizationRoles.Admin + "," + AuthorizationRoles.Responsible)]
+
     public class RoleController : ControllerBase
     {
         private readonly RoleServices _roleServices;

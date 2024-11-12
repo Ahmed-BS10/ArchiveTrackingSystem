@@ -58,7 +58,7 @@ namespace ArchiveTrackingSystem.Core.Services
                 issuer: _jwtSettings.Issuer,
                 audience: _jwtSettings.Audience,
                 claims: claims,
-                //expires: DateTime.UtcNow.AddDays(_jwtSettings.AccessTokenExpire),
+                 expires: DateTime.UtcNow.AddYears(1),
                 signingCredentials: signincred
                 );
 

@@ -6,9 +6,9 @@ namespace ArchiveTrackingSystem.Core.Entities
     public class Active
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public string Slug { get; set; }
         public string NumberActive { get; set; }
-        public string Name { get; set; }
         public string Type { get; set; }
         public string? Note { get; set; }
         public DateTime CreateAt { get; set; }
@@ -22,7 +22,7 @@ namespace ArchiveTrackingSystem.Core.Entities
         public Payment? typePayment { get; set; }
 
         [JsonIgnore]
-        public ICollection<File> files {  get; set; }       
+        public ICollection<File> files { get; set; }
     }
 
 

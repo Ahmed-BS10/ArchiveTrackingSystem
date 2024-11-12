@@ -112,7 +112,7 @@ public class ProfileMapper : Profile
 
         CreateMap<FileOutsideArchive, FileOutsideGetDto>()
            .ForMember(dest => dest.Employe, opt => opt.MapFrom(src => src.employe.Name))
-           .ForMember(dest => dest.File, opt => opt.MapFrom(src => src.file.Name));
+           .ForMember(dest => dest.File, opt => opt.MapFrom(src => src.file.FileNumber));
 
         #endregion
 
@@ -123,7 +123,7 @@ public class ProfileMapper : Profile
         CreateMap<ArchiveUpdateDto, Archive>();
 
         CreateMap<Archive, ArchiveGetDto>()
-            .ForMember(dest => dest.Files, opt => opt.MapFrom(src => src.Files.Select(x => x.Name)));
+            .ForMember(dest => dest.Files, opt => opt.MapFrom(src => src.Files.Select(x => x.FileNumber)));
 
         #endregion
 

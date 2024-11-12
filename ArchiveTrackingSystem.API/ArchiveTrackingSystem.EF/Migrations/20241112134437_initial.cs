@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ArchiveTrackingSystem.EF.Migrations
 {
     /// <inheritdoc />
-    public partial class z1 : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,6 +35,7 @@ namespace ArchiveTrackingSystem.EF.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
@@ -92,8 +93,8 @@ namespace ArchiveTrackingSystem.EF.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Slug = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Slug = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     job = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Deparatment = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -234,9 +235,9 @@ namespace ArchiveTrackingSystem.EF.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Slug = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     NumberActive = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -259,16 +260,18 @@ namespace ArchiveTrackingSystem.EF.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FileNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TaxpayerName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Slug = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CommercialNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TradeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TaxNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    ExclusiveNymber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DocumentCount = table.Column<int>(type: "int", nullable: false),
                     EmployeeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FileStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Notes = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: true),
                     ArchiveID = table.Column<int>(type: "int", nullable: false),
                     AddressID = table.Column<int>(type: "int", nullable: false),
                     ActiveID = table.Column<int>(type: "int", nullable: false),
